@@ -1,20 +1,51 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-		<link href="denglu.css" rel="stylesheet" type="text/css">
-	</head>
-	<body>
-		<div class="div">
-			<p class="p">注册账户</p>
-			输入账号：<input type="text"/>
-			<br /> <br />
-			输入密码：<input type="password"/>
-			<br /> <br />
-			确认密码：<input type="password"/>
-			<br /> <br />
-			<a href="denglu.html" class="button">确认</a>
-		</div>
-	</body>
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link href="denglu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div class="div">
+		<p class="p">注册账户</p>
+		输入账号：<input type="text" id="name" />
+		<br /> <br />
+		输入密码：<input type="password" id="password" />
+		<br /> <br />
+		确认密码：<input type="password" id="password_repeat" />
+		<br /> <br />
+		<a onclick="sign_up()" class="button">确认</a>
+	</div>
+	<script>
+		function sign_up() {
+			const name = document.getElementById("name").value;
+			const password = document.getElementById("password").value;
+			const password_repeat = document.getElementById("password_repeat").value;
+			if (password !== password_repeat) {
+				alert("两次密码不相同");
+				return;
+			}
+			const xhr = new XMLHttpRequest()
+			var form_data = new FormData()
+			form_data.append("name", name);
+			form_data.append("password", password);
+			xhr.open('POST', 'http://127.0.0.1:5000/api/v1/auth/user');
+			xhr.send(form_data);
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState == 4) {
+					var response_data = JSON.parse(xhr.response);
+					if (response_data["code"] == 200) {
+						alert("注册成功");
+						window.location.href = "./denglu.html";
+					} else {
+						alert("注册失败：" + response_data["error"]);
+					}
+				}
+			}
+		};
+	</script>
+</body>
+
 </html>
