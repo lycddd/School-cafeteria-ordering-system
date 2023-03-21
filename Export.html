@@ -9,6 +9,7 @@
         .nav{
            height: 65px;
            border-bottom: 3px black solid;
+           position: relative;
         }
         .nav h1{
             margin-top: 0;
@@ -25,6 +26,21 @@
             text-align: center;
             list-style: none;
         }
+        .anniu{
+            clear: both;
+            text-align: center;
+
+        }
+        .anniu li{
+            list-style: none;
+        }
+        .button{
+            margin: 50px auto;
+			font-size: 25px;
+			font-weight: 700;
+        }
+
+        
     </style>
 </head>
 <body>
@@ -38,5 +54,18 @@
             <a href=""><li>退出登录</li></a>
         </ul>
     </div>
+    <div class="anniu">
+    <li><button class="button" onclick="exportToExcel()">每日产品订货单</button></li>
+    <li><button class="button" onclick="exportToExcel()">报价单</button></li>
+    <li><button class="button" onclick="exportToExcel()">学校销售汇总</button></li>
+    <li><button class="button" onclick="exportToExcel()">客户每日销售单</button></li>
+    <li><button class="button" onclick="exportToExcel()">客户每月销售单</button></li>
+    <li><button class="button" onclick="exportToExcel()">月单个产品汇总图</button></li>
+</div>
+    <script>
+        function exportToExcel() {
+        window.location.href='';
+        }
+        </script>
 </body>
 </html>
