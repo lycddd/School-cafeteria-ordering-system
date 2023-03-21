@@ -27,6 +27,10 @@
 				alert("两次密码不相同");
 				return;
 			}
+			if (name == undefined || name.length < 1) {
+				alert("账号不能为空");
+				return;
+			}
 			const xhr = new XMLHttpRequest()
 			var form_data = new FormData()
 			form_data.append("name", name);
