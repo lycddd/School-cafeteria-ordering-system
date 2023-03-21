@@ -96,7 +96,8 @@
                 <th>是否付款</th>
                 <th style="width: 20%;">操作</th>
             </tr>
-            <tr id="tr_1" style="display:'';">
+            <tr  style="display:'';">
+                <td id="tr_1">1</td>
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
@@ -104,8 +105,10 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                <td>1</td>
-                
+                <td style="text-align: left;">
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
+                    <a onclick="tr_delete('tr_1')" style="width: 40%;margin-left: 10%;background-color: white;color: red;">删除</a>
+                </td>
             </tr>
             <tr id="tr_2" style="display: none;">
                 <td>2</td>
@@ -116,7 +119,10 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-               
+                <td style="text-align: left;">
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: red;">删除</a>
+                </td>
             </tr>
             <tr id="tr_3" style="display: none;">
                 <td>3</td>
@@ -127,7 +133,10 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+                <td style="text-align: left;">
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: red;">删除</a>
+                </td>
             </tr>
             <tr id="tr_4" style="display: none;">
                 <td>4</td>
@@ -138,7 +147,10 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+                <td style="text-align: left;">
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: red;">删除</a>
+                </td>
             </tr>
             <tr id="tr_5" style="display: none;">
                 <td>5</td>
@@ -149,7 +161,10 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+                <td style="text-align: left;">
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: red;">删除</a>
+                </td>
             </tr>
             <tr id="tr_6" style="display: none;">
                 <td>6</td>
@@ -160,7 +175,10 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+                <td style="text-align: left;">
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: red;">删除</a>
+                </td>
             </tr>
             <tr id="tr_7" style="display: none;">
                 <td>7</td>
@@ -171,7 +189,10 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+                <td style="text-align: left;">
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: red;">删除</a>
+                </td>
             </tr>
             <tr id="tr_8" style="display: none;">
                 <td>8</td>
@@ -182,7 +203,10 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+                <td style="text-align: left;">
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: red;">删除</a>
+                </td>
             </tr>
             <tr id="tr_9" style="display: none;">
                 <td>9</td>
@@ -193,7 +217,10 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+                <td style="text-align: left;">
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: red;">删除</a>
+                </td>
             </tr>
             <tr id="tr_10" style="display: none;">
                 <td>10</td>
@@ -204,6 +231,10 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
+                <td style="text-align: left;">
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: red;">删除</a>
+                </td>
             </tr>
             <tr id="tr_11" style="display: none;">
                 <td>11</td>
@@ -214,6 +245,10 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
+                <td style="text-align: left;">
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
+                    <a style="width: 40%;margin-left: 10%;background-color: white;color: red;">删除</a>
+                </td>
             </tr>
         </table>
         <span class="span"></span>
@@ -221,8 +256,7 @@
         <a onclick="decrease_tr()" type="button">减少</a>
     </div>
     <script type="text/javascript">
-        var if_add=0;
-        var num=3;
+        var num=8;num_max=11;
             a='tr_'+num;
         var x=document.getElementById(a);
         
@@ -231,7 +265,11 @@
             y=document.getElementById(b);
             y.style.display='';
         }
+
         function add_tr(){
+            if(num>=num_max){
+                return;
+            }
             num=num+1;
             a='tr_'+num;
             x=document.getElementById(a);
@@ -240,7 +278,6 @@
                 x.style.display='';
             }
         }
-
         function decrease_tr(){
             x=document.getElementById(a);
             if(x.style.display==''){
@@ -249,6 +286,12 @@
                 num=num-1;
                 a='tr_'+num;
             }
+        }
+
+
+        function tr_delete(tr_id){
+            trid=document.getElementById(tr_id);
+            
         }
     </script>
 </body>
