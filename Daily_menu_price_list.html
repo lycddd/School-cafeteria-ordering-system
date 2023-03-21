@@ -51,12 +51,18 @@
         }
 
         .menu_table a{
+            background-color: darkgray;
             margin-left: 28%;
             float: left;
-            width: 10%;
-            height: 40px;
+            width: 7%;
+            height: 30px;
             text-align: center;
+            cursor: pointer;
         }
+
+
+
+        
 
         .span{
             float: left;
@@ -88,6 +94,7 @@
                 <th>单位</th>
                 <th>总价</th>
                 <th>是否付款</th>
+                <th style="width: 20%;">操作</th>
             </tr>
             <tr id="tr_1" style="display:'';">
                 <td>1</td>
@@ -98,6 +105,7 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
+                
             </tr>
             <tr id="tr_2" style="display: none;">
                 <td>2</td>
@@ -108,6 +116,7 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
+               
             </tr>
             <tr id="tr_3" style="display: none;">
                 <td>3</td>
@@ -118,9 +127,86 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
+                
             </tr>
             <tr id="tr_4" style="display: none;">
                 <td>4</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                
+            </tr>
+            <tr id="tr_5" style="display: none;">
+                <td>5</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                
+            </tr>
+            <tr id="tr_6" style="display: none;">
+                <td>6</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                
+            </tr>
+            <tr id="tr_7" style="display: none;">
+                <td>7</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                
+            </tr>
+            <tr id="tr_8" style="display: none;">
+                <td>8</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                
+            </tr>
+            <tr id="tr_9" style="display: none;">
+                <td>9</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                
+            </tr>
+            <tr id="tr_10" style="display: none;">
+                <td>10</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr id="tr_11" style="display: none;">
+                <td>11</td>
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
@@ -136,42 +222,33 @@
     </div>
     <script type="text/javascript">
         var if_add=0;
-        var num=2;
+        var num=3;
             a='tr_'+num;
         var x=document.getElementById(a);
         
-
+        for(var i=1;i<=num;i++){
+            b='tr_'+i;
+            y=document.getElementById(b);
+            y.style.display='';
+        }
         function add_tr(){
-            if(if_add==2){
-                num=num+1;
-                a='tr_'+num;
-                x=document.getElementById(a);
-            }
+            num=num+1;
+            a='tr_'+num;
+            x=document.getElementById(a);
 
             if(x.style.display=='none'){
                 x.style.display='';
-                num=num+1;
-                a='tr_'+num;
-                x=document.getElementById(a);
             }
-            if_add=1;
         }
 
         function decrease_tr(){
-            
-            if(if_add==1){
-                num=num-1;
-                a='tr_'+num;
-                x=document.getElementById(a);
-                
-            }
+            x=document.getElementById(a);
             if(x.style.display==''){
                 x.style.display='none';
+                x=document.getElementById(a);
                 num=num-1;
                 a='tr_'+num;
-                x=document.getElementById(a);
             }
-            if_add=2;
         }
     </script>
 </body>
