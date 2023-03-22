@@ -7,7 +7,7 @@
 	<link href="denglu.css" rel="stylesheet" type="text/css">
 	<script>
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "http://127.0.0.1:5000/api/v1/auth/user/session");
+		xhr.open("GET", "/api/v1/auth/user/session");
 		xhr.send();
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState == 4) {
@@ -40,13 +40,13 @@
 			form_data.append("name", name);
 			form_data.append("password", password);
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", "http://127.0.0.1:5000/api/v1/auth/user/session");
+			xhr.open("POST", "/api/v1/auth/user/session");
 			xhr.send(form_data);
 			xhr.onreadystatechange = function () {
 				if (xhr.readyState == 4) {
 					var response_data = JSON.parse(xhr.response);
 					if (response_data["code"] == 200) {
-						window.location.href = "./Untitled-1.html";
+						window.location.href = "./School_information.html";
 					} else {
 						alert(response_data["error"]);
 					}
