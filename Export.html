@@ -15,7 +15,7 @@
             margin-top: 0;
             width: 20%;
             float: left;
-        }
+        } 
         .nav ul{
            margin-top: 0;
            width: 100%;
@@ -55,24 +55,31 @@
         </ul>
     </div>
     <div class="anniu">
-    <li><button class="button" onclick="exportToExcel()">每日产品订货单</button></li>
-    <li><button class="button" onclick="exportToExcel()">报价单</button></li>
-    <li><button class="button" onclick="exportToExcel()">学校销售汇总</button></li>
-    <li><button class="button" onclick="exportToExcel()">客户每日销售单</button></li>
-    <li><button class="button" onclick="exportToExcel()">客户每月销售单</button></li>
-    <li><button class="button" onclick="exportToExcel()">月单个产品汇总图</button></li>
-</div>
+        <li><button class="button" onclick="downloadExcel()">每日产品订货单</button></li>
+        <li><button class="button" onclick="downloadExcel()">报价单</button></li>
+        <li><button class="button" onclick="downloadExcel()">学校销售汇总</button></li>
+        <li><button class="button" onclick="downloadExcel()">客户每日销售单</button></li>
+        <li><button class="button" onclick="downloadExcel()">客户每月销售单</button></li>
+        <li><button class="button" onclick="downloadExcel()">月单个产品汇总图</button></li>
+    </div>
     <script>
-    function exportToExcel(fileName) {
-  const table = document.querySelector('table'); // 获取要导出的数据表格
-  const tableHtml = table.outerHTML.replace(/ /g, '%!'(MISSING)); // 将空格替换成 %!，(MISSING)避免下载链接出现问题
-  const downloadLink = document.createElement('a');
-  downloadLink.setAttribute('href', 'data:application/vnd.ms-excel;charset=utf-8,' + tableHtml);
-  downloadLink.setAttribute('download', fileName + '.xls');
-  downloadLink.style.display = 'none';
-  document.body.appendChild(downloadLink);
-  downloadLink.click();
-  document.body.removeChild(downloadLink);
+ function downloadExcel() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/download', true);
+    xhr.responseType = 'blob';
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var a = document.createElement('a');
+            a.href = window.URL.createObjectURL(xhr.response);
+            a.download = 'data.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    };
+
+    xhr.send();
 }
         </script>
 </body>
