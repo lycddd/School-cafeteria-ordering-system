@@ -7,7 +7,7 @@
 	<link href="denglu.css" rel="stylesheet" type="text/css">
 	<script>
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "/api/v1/auth/user/session");
+		xhr.open("GET", "http://127.0.0.1:5000/api/v1/auth/user/session");
 		xhr.send();
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState == 4) {
