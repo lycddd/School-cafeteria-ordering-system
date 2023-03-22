@@ -62,8 +62,12 @@
         }
 
 
-
-
+        .menu_change{
+            margin-left: 10%;
+            float: left;
+            width: 80%;
+            text-align: center;
+        }
 
         .span {
             float: left;
@@ -92,7 +96,7 @@
         </ul>
     </div>
 
-    <div class="menu_table">
+    <div id="menu_table" class="menu_table" style="display: '';">
         <table id="table_1">
             <tr>
                 <th>日期</th>
@@ -286,6 +290,22 @@
         <a onclick="add_tr()" type="button">增加</a>
         <a onclick="decrease_tr()" type="button">减少</a>
     </div>
+    <span class="span"></span>
+    <span class="span"></span>
+    <div id="menu_change" class="menu_change" style="display: none;">
+        <form action="">
+            日期：<input type="text"><br /><br />
+            菜名：<input type="text"><br /><br />
+            描述：<input type="text"><br /><br />
+            数量：<input type="text"><br /><br />
+            报价：<input type="text"><br /><br />
+            单位：<input type="text"><br /><br />
+            总价：<input type="text"><br /><br />
+            是否打款：<input type="text"><br /><br />
+            <a onclick="save()" >保存</a>
+        </form>
+    </div>
+    
     <script type="text/javascript">
         var num = 8; row_max = 11;
         a = 'tr_' + num;
@@ -327,6 +347,7 @@
                     td_row = document.getElementById("table_1").rows[row].cells[cell];
                     td_row.style.backgroundColor = "darkgrey";
                 }
+                
             }
             else {
                 for (cell = 0; cell <= 7; cell = cell + 1) {
@@ -334,7 +355,8 @@
                     td_row.style.backgroundColor = "white";
                 }
             }
-
+            document.getElementById("menu_change").style.display='';
+            document.getElementById("menu_table").style.display='none';
             a1_change.innerText = a1_change.innerText === "修改" ? "保存" : "修改";
         }
 
@@ -353,8 +375,12 @@
                 td_row.innerText = "";
             }
 
-
             decrease_tr();
+        }
+
+        function save(){
+            document.getElementById("menu_table").style.display='';
+            document.getElementById("menu_change").style.display='none';
         }
     </script>
 </body>
