@@ -1,42 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .nav{
-           height: 65px;
-           border-bottom: 3px black solid;
+        .nav {
+            height: 65px;
+            border-bottom: 3px black solid;
         }
-        .nav h1{
+
+        .nav h1 {
             margin-top: 0;
             width: 20%;
             float: left;
         }
-        .nav ul{
-           margin-top: 0;
-           width: 100%;
+
+        .nav ul {
+            margin-top: 0;
+            width: 100%;
         }
-        .nav ul li{
+
+        .nav ul li {
             width: 20%;
             float: left;
             text-align: center;
             list-style: none;
         }
+
+        .school_table {
+            width: 10%;
+            border-right: 2px solid black;
+            border-bottom: 2px solid black;
+        }
+
+        .school_table .school_tr th {
+            float: left;
+            width: 20%;
+        }
+
+        .school_table .span {
+            float: left;
+            width: 20%;
+        }
+
+        .button {
+            background-color: rgb(138, 187, 224);
+            margin-left: 15%;
+            float: left;
+            width: 15%;
+            height: 30px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .section {
+            width: 70%;
+            float: right;
+
+        }
+        .consumer_table {
+            display: inline-block;
+            width: 80%;
+
+        }
+        
+        .consumer_table tr th {
+            margin-top: 0;
+            width: 10%;
+            height: 50px;
+        }
+
+        
     </style>
 </head>
+
 <body>
     <div class="nav">
         <h1>食堂订菜系统</h1>
         <br>
         <ul>
-            <a href=""><li>学校信息</li></a>
-            <a href=""><li>每日菜品价目表</li></a>
-            <a href=""><li>导出汇总</li></a>
-            <a href=""><li>退出登录</li></a>
+            <a href="">
+                <li>学校信息</li>
+            </a>
+            <a href="">
+                <li>每日菜品价目表</li>
+            </a>
+            <a href="">
+                <li>导出汇总</li>
+            </a>
+            <a href="">
+                <li>退出登录</li>
+            </a>
         </ul>
     </div>
+    <div>
+        <aside class="aside" style="width: 30%;height: 700px; float: left;">
+            <table class="school_table">
+                <tr class="school_tr">
+                    <th id="th_1" style="background-color: azure;height: 50px;width: 400px;display: none;"><a onclick="s_1()">学校名称1</a>
+                    </th>
+                    <th id="th_2" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s_2()">学校名称2</a>
+                    </th>
+                    <th id="th_3" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s_3()">学校名称3</a>
+                    </th>
+                    <th id="th_4" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s4()">学校名称4</a>
+                    </th>
+                    <th id="th_5" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s5()">学校名称5</a>
+                    </th>
+                    <th id="th_6" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s6()">学校名称6</a>
+                    </th>
+                    <th id="th_7" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s7()">学校名称7</a>
+                    </th>
+                    <th id="th_8" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s8()">学校名称8</a>
+                    </th>
+                    <th id="th_9" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s9()">学校名称9</a>
+                    </th>
+                    <th id="th_10" style="background-color: azure;height: 50px;width: 100%;display: none;">
+                        <a onclick="s10()">学校名称10</a>
+                    </th>
+                </tr>
+            </table>
+            <div style="">
+                <span class="span"></span>
+                <a onclick="add_th()" type="button" class="button">增加</a>
+                <a onclick="decrease_th()" type="button" class="button">减少</a>
+                <a onclick="" type="button" class="button">下一页</a>
+            </div>
+        </aside>
+        <section class="section">
+            <table class="consumer_table">
+                <tr>
+                    <th>客户编号</th>
+                    <th>客户名称</th>
+                    <th>负责人姓名</th>
+                    <th>负责人联系电话</th>
+                    <th>地址</th>
+                    <th>操作</th>
+                </tr>
+                <tr id="ctr_1" style="display: none;">
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                </tr>
+                <tr id="ctr_2" style="display: none;">
+                    <th>2</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                </tr>
+                <tr id="ctr_3" style="display: none;">
+                    <th>3</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                </tr>
+                <tr id="ctr_4" style="display: none;">
+                    <th>4</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                </tr>
+                <tr id="ctr_5" style="display: none;">
+                    <th>5</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                </tr>
+                <tr id="ctr_6" style="display: none;">
+                    <th>6</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                </tr>
+                <tr id="ctr_7" style="display: none;">
+                    <th>7</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                </tr>
+                <tr id="ctr_8" style="display: none;">
+                    <th>8</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                </tr>
+                <tr id="ctr_9" style="display: none;">
+                    <th>9</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                </tr>
+                <tr id="ctr_10" style="display: none;">
+                    <th>10</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                    <th>1</th>
+                </tr>
+            </table>
+            <a onclick="add_ctr()" type="button" class="button">增加</a>
+                <a onclick="decrease_ctr()" type="button" class="button">减少</a>
+                <a onclick="" type="button" class="button">下一页</a>
+        </section>
+    </div>
+
+    <script type="text/javascript">
+        var num1 = 8; num1_max = 10;
+        a = 'th_' + num1;
+        var x = document.getElementById(a);
+
+        for (var i = 1; i <= num1; i++) {
+            b = 'th_' + i;
+            y = document.getElementById(b);
+            y.style.display = '';
+        }
+
+        function add_th() {
+            if (num1 >= num1_max) {
+                return;
+            }
+            num1 = num1 + 1;
+            a = 'th_' + num1;
+            x = document.getElementById(a);
+
+            if (x.style.display == 'none') {
+                x.style.display = '';
+            }
+        }
+
+        function decrease_th() {
+            x = document.getElementById(a);
+            if (x.style.display == '') {
+                x.style.display = 'none';
+                x = document.getElementById(a);
+                num1 = num1 - 1;
+                a = 'th_' + num1;
+            }
+        }
+
+        function th_delete(th_id) {
+            trid = document.getElementById(th_id);
+
+        }
+
+        var num2 = 5; num2_max = 10;
+        c = 'ctr_' + num2;
+        var w = document.getElementById(c);
+
+        for (var j = 1; j <= num1; j++) {
+            d = 'ctr_' + j;
+            z = document.getElementById(d);
+            z.style.display = '';
+        }
+
+        function add_ctr() {
+            if (num2 >= num2_max) {
+                return;
+            }
+            num2 = num2 + 1;
+            c = 'ctr_' + num2;
+            w = document.getElementById(c);
+
+            if (w.style.display == 'none') {
+                w.style.display = '';
+            }
+        }
+
+        function decrease_ctr() {
+            w = document.getElementById(c);
+            if (w.style.display == '') {
+                w.style.display = 'none';
+                w = document.getElementById(c);
+                num2 = num2 - 1;
+                c = 'ctr_' + num2;
+            }
+        }
+
+        function ctr_delete(ctr_id) {
+            trid = document.getElementById(ctr_id);
+
+        }
+    </script>
 </body>
+
 </html>
