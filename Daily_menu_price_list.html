@@ -34,7 +34,6 @@
 
         .menu_table table {
             float: left;
-
             width: 80%;
             margin-left: 10%;
         }
@@ -53,7 +52,7 @@
 
         .menu_table a {
             background-color: darkgray;
-            margin-left: 28%;
+            margin-left: 46%;
             float: left;
             width: 7%;
             height: 30px;
@@ -62,7 +61,7 @@
         }
 
 
-        .menu_change{
+        .menu_change {
             margin-left: 10%;
             float: left;
             width: 80%;
@@ -288,12 +287,14 @@
         </table>
         <span class="span"></span>
         <a onclick="add_tr()" type="button">增加</a>
-        <a onclick="decrease_tr()" type="button">减少</a>
+
     </div>
     <span class="span"></span>
     <span class="span"></span>
     <div id="menu_change" class="menu_change" style="display: none;">
         <form action="">
+            <input id="t_row" value="h" style="display: none;" type="text">
+            <input id="t_cell" value="" style="display: none;" type="text">
             日期：<input id="date_" type="text" value="hahah"><br /><br />
             菜名：<input id="dishname_" type="text"><br /><br />
             描述：<input id="describe_" type="text"><br /><br />
@@ -302,10 +303,10 @@
             单位：<input id="unit_" type="text"><br /><br />
             总价：<input id="total_" type="text"><br /><br />
             是否打款：<input id="ifpay_" type="text"><br /><br />
-            <a onclick="save()" >保存</a>
+            <a onclick="save()">保存</a>
         </form>
     </div>
-    
+
     <script type="text/javascript">
         var num = 8; row_max = 11;
         a = 'tr_' + num;
@@ -340,20 +341,22 @@
         }
 
         function tr_change(row, cell) {
-            var x = "tr_" + row + "_a1";
-            var a1_change = document.getElementById(x);
-            var date_change=document.getElementById("date_"),dishname_change=document.getElementById("dishname_"),describe_change=document.getElementById("describe_"),num_change=document.getElementById("num_"),price_change=document.getElementById("price_"),unit_change=document.getElementById("unit_"),total_change=document.getElementById("total_"),ifpay_change=document.getElementById("ifpay_"),
-                date_table=document.getElementById("table_1").rows[row].cells[cell],dishname_table=document.getElementById("table_1").rows[row].cells[cell+1],describe_table=document.getElementById("table_1").rows[row].cells[cell+2],num_table=document.getElementById("table_1").rows[row].cells[cell+3],price_table=document.getElementById("table_1").rows[row].cells[cell+4],unit_table=document.getElementById("table_1").rows[row].cells[cell+5],total_table=document.getElementById("table_1").rows[row].cells[cell+6],ifpay_table=document.getElementById("table_1").rows[row].cells[cell+7];
-            document.getElementById("menu_change").style.display='';
-            document.getElementById("menu_table").style.display='none';
-            date_change.value=date_table.innerText;
-            dishname_change.value=dishname_table.innerText;
-            describe_change.value=describe_table.innerText;
-            num_change.value=num_table.innerText;
-            price_change.value=price_table.innerText;
-            total_change.value=total_table.innerText;
-            unit_change.value=unit_table.innerText;
-            ifpay_change.value=ifpay_table.innerText;
+            var row_change = document.getElementById("t_row"), cell_change = document.getElementById("t_cell");
+            var date_change = document.getElementById("date_"), dishname_change = document.getElementById("dishname_"), describe_change = document.getElementById("describe_"), num_change = document.getElementById("num_"), price_change = document.getElementById("price_"), unit_change = document.getElementById("unit_"), total_change = document.getElementById("total_"), ifpay_change = document.getElementById("ifpay_"),
+                date_table = document.getElementById("table_1").rows[row].cells[cell], dishname_table = document.getElementById("table_1").rows[row].cells[cell + 1], describe_table = document.getElementById("table_1").rows[row].cells[cell + 2], num_table = document.getElementById("table_1").rows[row].cells[cell + 3], price_table = document.getElementById("table_1").rows[row].cells[cell + 4], unit_table = document.getElementById("table_1").rows[row].cells[cell + 5], total_table = document.getElementById("table_1").rows[row].cells[cell + 6], ifpay_table = document.getElementById("table_1").rows[row].cells[cell + 7];
+            document.getElementById("menu_change").style.display = '';
+            document.getElementById("menu_table").style.display = 'none';
+            date_change.value = date_table.innerText;
+            dishname_change.value = dishname_table.innerText;
+            describe_change.value = describe_table.innerText;
+            num_change.value = num_table.innerText;
+            price_change.value = price_table.innerText;
+            total_change.value = total_table.innerText;
+            unit_change.value = unit_table.innerText;
+            ifpay_change.value = ifpay_table.innerText;
+            row_change.value = row;
+            cell_change.value = cell;
+
         }
 
         function tr_delete(row, cell) {
@@ -370,13 +373,24 @@
                 td_row = document.getElementById("table_1").rows[row].cells[cell];
                 td_row.innerText = "";
             }
-
             decrease_tr();
         }
 
-        function save(){
-            document.getElementById("menu_table").style.display='';
-            document.getElementById("menu_change").style.display='none';
+        function save() {
+            var row = Number(document.getElementById("t_row").value), cell = Number(document.getElementById("t_cell").value) ;
+            var date_change = document.getElementById("date_"), dishname_change = document.getElementById("dishname_"), describe_change = document.getElementById("describe_"), num_change = document.getElementById("num_"), price_change = document.getElementById("price_"), unit_change = document.getElementById("unit_"), total_change = document.getElementById("total_"), ifpay_change = document.getElementById("ifpay_"),
+                date_table = document.getElementById("table_1").rows[row].cells[cell], dishname_table = document.getElementById("table_1").rows[row].cells[cell + 1], describe_table = document.getElementById("table_1").rows[row].cells[cell + 2], num_table = document.getElementById("table_1").rows[row].cells[cell + 3], price_table = document.getElementById("table_1").rows[row].cells[cell + 4], unit_table = document.getElementById("table_1").rows[row].cells[cell + 5], total_table = document.getElementById("table_1").rows[row].cells[cell + 6], ifpay_table = document.getElementById("table_1").rows[row].cells[cell + 7];
+
+            date_table.innerText = date_change.value;
+            dishname_table.innerText = dishname_change.value;
+            describe_table.innerText = describe_change.value;
+            num_table.innerText = num_change.value;
+            price_table.innerText = price_change.value;
+            unit_table.innerText = unit_change.value;
+            total_table.innerText = total_change.value;
+            ifpay_table.innerText = total_change.value;
+            document.getElementById("menu_table").style.display = '';
+            document.getElementById("menu_change").style.display = 'none';
         }
     </script>
 </body>
