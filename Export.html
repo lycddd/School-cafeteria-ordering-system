@@ -65,7 +65,7 @@
     <script>
  function downloadExcel() {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/download', true);
+    xhr.open('GET', '/download', true);
     xhr.responseType = 'blob';
 
     xhr.onload = function() {
