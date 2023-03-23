@@ -286,25 +286,26 @@
             </tr>
         </table>
         <span class="span"></span>
-        <a onclick="add_tr()" type="button">增加</a>
+        <a onclick="add_tr()" type="button" >增加</a>
 
     </div>
     <span class="span"></span>
     <span class="span"></span>
     <div id="menu_change" class="menu_change" style="display: none;">
-        <form action="">
+        <form id = 'form1' action="">
             <input id="t_row" value="h" style="display: none;" type="text">
             <input id="t_cell" value="" style="display: none;" type="text">
-            日期：<input id="date_" type="text" value="hahah"><br /><br />
-            菜名：<input id="dishname_" type="text"><br /><br />
-            描述：<input id="describe_" type="text"><br /><br />
-            数量：<input id="num_" type="text"><br /><br />
-            报价：<input id="price_" type="text"><br /><br />
-            单位：<input id="unit_" type="text"><br /><br />
-            总价：<input id="total_" type="text"><br /><br />
-            是否打款：<input id="ifpay_" type="text"><br /><br />
+            日期：<input id="date_" type="text" value="hahah" name="date"><br /><br />
+            菜名：<input id="dishname_" type="text" name="dishname"><br /><br />
+            描述：<input id="describe_" type="text" name="describe"><br /><br />
+            数量：<input id="num_" type="text" name="num"><br /><br />
+            报价：<input id="price_" type="text" name="price"><br /><br />
+            单位：<input id="unit_" type="text" name="unit"><br /><br />
+            总价：<input id="total_" type="text" name="total"><br /><br />
+            是否打款：<input id="ifpay_" type="text" name="ifpay"><br /><br />
             <a onclick="save()">保存</a>
         </form>
+       
     </div>
 
     <script type="text/javascript">
@@ -391,6 +392,30 @@
             ifpay_table.innerText = total_change.value;
             document.getElementById("menu_table").style.display = '';
             document.getElementById("menu_change").style.display = 'none';
+                const date_ = document.getElementById("date_").value;
+                const dishname_ = document.getElementById("dishname_").value;
+                const describe_ = document.getElementById("describe_").value;
+                const num_ = document.getElementById("num_").value;
+                const price_ = document.getElementById("price_").value;
+                const unit_ = document.getElementById("unit_").value;
+                const total_ = document.getElementById("total_").value;
+                const ifpay_ = document.getElementById("ifpay_").value;
+                var json_data = new JSON.stringify({"date_":date_,"dishname_":dishname_,"describe_":describe_,"num_":num_,"price_":price_,"unit_":unit_,"total_":total_,"ifpay_":ifpay_});
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST","http://127.0.0.1:5000/api/v1/categories");
+                xhr.send(json_data);
+                xhr.withCredentials = true;
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState == 4){
+                        var response_data = JSON.parse(xhr.response);
+                        if(response_data>=200 && response_data<300){
+                            alert("操作成功！");
+                        }
+                        else{
+                            alert("操作失败！");
+                        }
+                    }
+                }
         }
     </script>
 </body>
