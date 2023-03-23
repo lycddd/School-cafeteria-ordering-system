@@ -30,7 +30,7 @@
 			密码：<input type="password" id="password" />
 			<br /> <br />
 			<a href="#" class="button">忘记密码</a>
-			<a href="zhuce.html" class="button">注册新账户</a>
+			<a href="Register.html" class="button">注册新账户</a>
 			<a onclick="login()" class="button">登录</a>
 	</div>
 	<script>
@@ -47,7 +47,7 @@
 				if (xhr.readyState == 4) {
 					var response_data = JSON.parse(xhr.response);
 					if (response_data["code"] == 200) {
-						window.location.href = "./Order_information.html";
+						window.location.href = "./School_information.html";
 					} else {
 						alert(response_data["error"]);
 					}
