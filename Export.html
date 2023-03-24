@@ -54,33 +54,34 @@
             <a href=""><li>退出登录</li></a>
         </ul>
     </div>
-    <div class="anniu">
-        <li><button class="button" onclick="downloadExcel()">每日产品订货单</button></li>
-        <li><button class="button" onclick="downloadExcel()">报价单</button></li>
-        <li><button class="button" onclick="downloadExcel()">学校销售汇总</button></li>
-        <li><button class="button" onclick="downloadExcel()">客户每日销售单</button></li>
-        <li><button class="button" onclick="downloadExcel()">客户每月销售单</button></li>
-        <li><button class="button" onclick="downloadExcel()">月单个产品汇总图</button></li>
-    </div>
-    <script>
- function downloadExcel() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/download', true);
-    xhr.responseType = 'blob';
+  <div class="anniu">
+    <li><button class="button" data-file="daily-order">每日产品订货单</button></li>
+    <li><button class="button" data-file="quotation">报价单</button></li>
+    <li><button class="button" data-file="school-sales">学校销售汇总</button></li>
+    <li><button class="button" data-file="customer-daily-sales">客户每日销售单</button></li>
+    <li><button class="button" data-file="customer-monthly-sales">客户每月销售单</button></li>
+    <li><button class="button" data-file="product-monthly-summary">月单个产品汇总图</button></li>
+</div>
+<script>
+const anniuDiv = document.querySelector('.anniu');
+const buttons = Array.from(document.querySelectorAll('.button'));
 
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            var a = document.createElement('a');
-            a.href = window.URL.createObjectURL(xhr.response);
-            a.download = 'data.xlsx';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-    };
+anniuDiv.addEventListener('click', async (event) => {
+  const { target } = event;
+  if (!target.matches('.button')) return;
 
-    xhr.send();
-}
-        </script>
+  const file = target.dataset.file;
+  const url = `/download/${file}`;
+  const response = await fetch(url);
+  const blob = await response.blob();
+
+  const a = document.createElement('a');
+  a.href = window.URL.createObjectURL(blob);
+  a.download = `${file}.xlsx`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+});
+</script>
 </body>
 </html>
