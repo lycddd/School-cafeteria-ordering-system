@@ -32,15 +32,14 @@
 				return;
 			}
 			const xhr = new XMLHttpRequest()
-			var form_data = new FormData()
-			form_data.append("name", name);
-			form_data.append("password", password);
-			xhr.open('POST', 'http://127.0.0.1:5000/api/v1/auth/user');
-			xhr.send(form_data);
+			var json_data = window.JSON.stringify({ "name": name,"password":password,"password_repeat":password_repeat});
+			xhr.open('POST', 'http://127.0.0.1:5000/api/v1/users');
+			xhr.setRequestHeader("Content-type", "application/json"); 
+			xhr.send(json_data);
 			xhr.onreadystatechange = function () {
 				if (xhr.readyState == 4) {
 					var response_data = JSON.parse(xhr.response);
-					if (response_data["code"] == 200) {
+					if (response_data["code"] < 300) {
 						alert("注册成功");
 						window.location.href = "./Login.html";
 					} else {

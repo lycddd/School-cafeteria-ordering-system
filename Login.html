@@ -7,16 +7,15 @@
 	<link href="denglu.css" rel="stylesheet" type="text/css">
 	<script>
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "http://127.0.0.1:5000/api/v1/auth/user/session");
+		xhr.open("GET", "http://127.0.0.1:5000/api/v1/session");
 		xhr.withCredentials = true;
 		xhr.send();
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState == 4) {
-				var response_data = JSON.parse(xhr.response);
-				if (response_data["code"] < 300) {
+				if (xhr.status < 300) {
 					window.location.href = "./School_information.html";
 				}
-		}
+		};
 	}
 	</script>
 </head>
@@ -37,19 +36,18 @@
 		function login() {
 			const name = document.getElementById("name").value;
 			const password = document.getElementById("password").value;
-			var form_data = new FormData();
-			form_data.append("name", name);
-			form_data.append("password", password);
+			var json_data = window.JSON.stringify({ "name": name,"password":password});
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", "http://127.0.0.1:5000/api/v1/auth/user/session");
+			xhr.open("POST", "http://127.0.0.1:5000/api/v1/session");
 			xhr.withCredentials = true;
-			xhr.send(form_data);
+			xhr.setRequestHeader("Content-type", "application/json"); 
+			xhr.send(json_data);
 			xhr.onreadystatechange = function () {
 				if (xhr.readyState == 4) {
-					var response_data = JSON.parse(xhr.response);
-					if (response_data["code"] == 200) {
+					if (xhr.status < 300) {
 						window.location.href = "./School_information.html";
 					} else {
+						var response_data = JSON.parse(xhr.response)
 						alert(response_data["error"]);
 					}
 				}
