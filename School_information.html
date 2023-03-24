@@ -55,24 +55,24 @@
             text-align: center;
             cursor: pointer;
         }
+
         .section {
             width: 70%;
             float: right;
 
         }
+
         .consumer_table {
             display: inline-block;
             width: 80%;
 
         }
-        
+
         .consumer_table tr th {
             margin-top: 0;
             width: 10%;
             height: 50px;
         }
-
-        
     </style>
 </head>
 
@@ -95,204 +95,136 @@
             </a>
         </ul>
     </div>
-    <div>
-        <aside class="aside" style="width: 30%;height: 700px; float: left;">
-            <table class="school_table">
-                <tr class="school_tr">
-                    <th id="th_1" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s_1()">学校名称1</a>
-                    </th>
-                    <th id="th_2" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s_2()">学校名称2</a>
-                    </th>
-                    <th id="th_3" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s_3()">学校名称3</a>
-                    </th>
-                    <th id="th_4" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s4()">学校名称4</a>
-                    </th>
-                    <th id="th_5" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s5()">学校名称5</a>
-                    </th>
-                    <th id="th_6" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s6()">学校名称6</a>
-                    </th>
-                    <th id="th_7" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s7()">学校名称7</a>
-                    </th>
-                    <th id="th_8" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s8()">学校名称8</a>
-                    </th>
-                    <th id="th_9" style="background-color: azure;height: 50px;width: 100%;display: none;"><a onclick="s9()">学校名称9</a>
-                    </th>
-                    <th id="th_10" style="background-color: azure;height: 50px;width: 100%;display: none;">
-                        <a onclick="s10()">学校名称10</a>
-                    </th>
-                </tr>
-            </table>
-            <div style="">
-                <span class="span"></span>
-                <a onclick="add_th()" type="button" class="button">增加</a>
-                <a onclick="decrease_th()" type="button" class="button">减少</a>
-                <a onclick="" type="button" class="button">下一页</a>
+    <div id="schools-container"></div>
+    <script>
+        const formData = {};
+
+        // Create a new school
+        function addSchool() {
+            const schoolName = prompt('Enter the name of the school:');
+            if (!schoolName) return;
+
+            // Create the school container
+            const schoolContainer = document.createElement('div');
+            schoolContainer.id = schoolName;
+            schoolContainer.innerHTML = `
+            <h2>${schoolName}</h2>
+            <form>
+              <label>客户名称:</label>
+              <input type="text" name="customerName" required>
+              <label>电话号码:</label>
+              <input type="tel" name="customerPhone" required>
+              <label>地址:</label>
+              <input type="text" name="customerAddress" required>
+              <label>电子邮箱:</label>
+              <input type="email" name="customerEmail" required>
+              <button type="button" onclick="addCustomer('${schoolName}')">添加</button>
+              <button type="button" onclick="clearCustomerForm('${schoolName}')">清除</button>
+            </form> 
+            <div class="customers-container"></div>
+          `;
+            document.getElementById('schools-container').appendChild(schoolContainer);
+
+            // Add the school to the form data
+            formData[schoolName] = { customers: [] };
+        }
+
+        // Add a customer to a school
+        function addCustomer(schoolName) {
+            const customerForm = document.getElementById(schoolName).querySelector('form');
+            const customerInputs = customerForm.querySelectorAll('input');
+            const customerName = customerInputs[0].value.trim();
+            const customerPhone = customerInputs[1].value.trim();
+            const customerAddress = customerInputs[2].value.trim();
+            const customerEmail = customerInputs[3].value.trim();
+
+            // Check if customer name already exists
+            const customerNames = formData[schoolName].customers.map(customer => customer.name);
+            if (customerNames.includes(customerName)) {
+                alert('Customer name already exists for this school!');
+                return;
+            }
+
+            // Create the customer container
+            const customerContainer = document.createElement('div');
+            customerContainer.className = 'customer-container';
+            const customerInfo = `
+            <div>
+              <label>客户名称:</label>
+              <span>${customerName}</span>
             </div>
-        </aside>
-        <section class="section">
-            <table class="consumer_table">
-                <tr>
-                    <th>客户编号</th>
-                    <th>客户名称</th>
-                    <th>负责人姓名</th>
-                    <th>负责人联系电话</th>
-                    <th>地址</th>
-                    <th>操作</th>
-                </tr>
-                <tr id="ctr_1" style="display: none;">
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                </tr>
-                <tr id="ctr_2" style="display: none;">
-                    <th>2</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                </tr>
-                <tr id="ctr_3" style="display: none;">
-                    <th>3</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                </tr>
-                <tr id="ctr_4" style="display: none;">
-                    <th>4</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                </tr>
-                <tr id="ctr_5" style="display: none;">
-                    <th>5</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                </tr>
-                <tr id="ctr_6" style="display: none;">
-                    <th>6</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                </tr>
-                <tr id="ctr_7" style="display: none;">
-                    <th>7</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                </tr>
-                <tr id="ctr_8" style="display: none;">
-                    <th>8</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                </tr>
-                <tr id="ctr_9" style="display: none;">
-                    <th>9</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                </tr>
-                <tr id="ctr_10" style="display: none;">
-                    <th>10</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                </tr>
-            </table>
-            <a onclick="add_ctr()" type="button" class="button">增加</a>
-                <a onclick="decrease_ctr()" type="button" class="button">减少</a>
-                <a onclick="" type="button" class="button">下一页</a>
-        </section>
-    </div>
+            <div>
+              <label>电话号码:</label>
+              <span>${customerPhone}</span>
+            </div>
+            <div>
+              <label>地址:</label>
+              <span>${customerAddress}</span>
+        </div>
+        <div>
+          <label>电子邮箱:</label>
+          <span>${customerEmail}</span>     
+        </div>
+        <button type="button" onclick="editCustomer('${schoolName}', '${customerName}')">修改</button>
+        <button type="button" onclick="deleteCustomer('${schoolName}', '${customerName}')">删除</button>
+        <a href="./Order_information.html">订单信息</a>
+      `;
+            customerContainer.innerHTML = customerInfo;
+            document.getElementById(schoolName).querySelector('.customers-container').appendChild(customerContainer);
 
-    <script type="text/javascript">
-        var num1 = 8; num1_max = 10;
-        a = 'th_' + num1;
-        var x = document.getElementById(a);
+            // Add the customer to the form data
+            formData[schoolName].customers.push({
+                name: customerName,
+                phone: customerPhone,
+                address: customerAddress,
+                email: customerEmail,
+            });
 
-        for (var i = 1; i <= num1; i++) {
-            b = 'th_' + i;
-            y = document.getElementById(b);
-            y.style.display = '';
+            // Clear the customer form
+            clearCustomerForm(schoolName);
         }
 
-        function add_th() {
-            if (num1 >= num1_max) {
-                return;
-            }
-            num1 = num1 + 1;
-            a = 'th_' + num1;
-            x = document.getElementById(a);
+        // Edit a customer for a school
+        function editCustomer(schoolName, customerName) {
+            // Find the customer in the form data
+            const customerIndex = formData[schoolName].customers.findIndex(customer => customer.name === customerName);
+            const customer = formData[schoolName].customers[customerIndex];
 
-            if (x.style.display == 'none') {
-                x.style.display = '';
-            }
+            // Populate the customer form with the customer's information
+            const customerForm = document.getElementById(schoolName).querySelector('form');
+            customerForm.customerName.value = customer.name;
+            customerForm.customerPhone.value = customer.phone;
+            customerForm.customerAddress.value = customer.address;
+            customerForm.customerEmail.value = customer.email;
+
+            // Remove the old customer container from the list
+            const oldCustomerContainer = document.getElementById(schoolName).querySelector(`.customers-container > div:nth-child(${customerIndex + 1})`);
+            oldCustomerContainer.remove();
+
+            // Remove the customer from the form data
+            formData[schoolName].customers.splice(customerIndex, 1);
         }
 
-        function decrease_th() {
-            x = document.getElementById(a);
-            if (x.style.display == '') {
-                x.style.display = 'none';
-                x = document.getElementById(a);
-                num1 = num1 - 1;
-                a = 'th_' + num1;
-            }
+        // Delete a customer for a school
+        function deleteCustomer(schoolName, customerName) {
+            // Find the customer in the form data
+            const customerIndex = formData[schoolName].customers.findIndex(customer => customer.name === customerName);
+
+            // Remove the customer container from the list
+            const customerContainer = document.getElementById(schoolName).querySelector(`.customers-container > div:nth-child(${customerIndex + 1})`);
+            customerContainer.remove();
+
+            // Remove the customer from the form data
+            formData[schoolName].customers.splice(customerIndex, 1);
         }
 
-        function th_delete(th_id) {
-            trid = document.getElementById(th_id);
-
-        }
-
-        var num2 = 5; num2_max = 10;
-        c = 'ctr_' + num2;
-        var w = document.getElementById(c);
-
-        for (var j = 1; j <= num1; j++) {
-            d = 'ctr_' + j;
-            z = document.getElementById(d);
-            z.style.display = '';
-        }
-
-        function add_ctr() {
-            if (num2 >= num2_max) {
-                return;
-            }
-            num2 = num2 + 1;
-            c = 'ctr_' + num2;
-            w = document.getElementById(c);
-
-            if (w.style.display == 'none') {
-                w.style.display = '';
-            }
-        }
-
-        function decrease_ctr() {
-            w = document.getElementById(c);
-            if (w.style.display == '') {
-                w.style.display = 'none';
-                w = document.getElementById(c);
-                num2 = num2 - 1;
-                c = 'ctr_' + num2;
-            }
-        }
-
-        function ctr_delete(ctr_id) {
-            trid = document.getElementById(ctr_id);
-
+        // Clear the customer form for a school
+        function clearCustomerForm(schoolName) {
+            const customerForm = document.getElementById(schoolName).querySelector('form');
+            customerForm.reset();
         }
     </script>
+    <button type="button" onclick="addSchool()">添加学校</button>
 </body>
 
 </html>

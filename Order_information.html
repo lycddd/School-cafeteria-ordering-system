@@ -32,16 +32,16 @@
     </style>
     <script>
         var xhr = new XMLHttpRequest();
-		xhr.open("GET", "http://127.0.0.1:5000/api/v1/auth/user/session");
-		xhr.send();
-		xhr.onreadystatechange = function () {
-			if (xhr.readyState == 4) {
-				var response_data = JSON.parse(xhr.response);
-				if (response_data["code"] > 300) {
-					window.location.href = "./denglu.html";
-				}
-		}
-	}
+        xhr.open("GET", "http://127.0.0.1:5000/api/v1/auth/user/session");
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                var response_data = JSON.parse(xhr.response);
+                if (response_data["code"] > 300) {
+                    window.location.href = "./denglu.html";
+                }
+            }
+        }
     </script>
 </head>
 
@@ -50,13 +50,13 @@
         <h1>食堂订菜系统</h1>
         <br>
         <ul>
-            <a href="">
+            <a href="School_information.html">
                 <li>学校信息</li>
             </a>
-            <a href="">
+            <a href="Daily_menu_price_list.html">
                 <li>每日菜品价目表</li>
             </a>
-            <a href="">
+            <a href="Export.html">
                 <li>导出汇总</li>
             </a>
             <a href="">
@@ -66,24 +66,112 @@
     </div>
 
     <h1>每日订单</h1>
-    <form method="post">
-        <fieldset>
-
-            <p><label for="time">日期</label>
-                <input type="text" name="time" />
-            </p>
-
-            <p><label for="menu_name">菜品名称</label>
-                <input type="text" />
-            </p>
-
-            <p><label for="numbers">数量</label>
-                <input type="text" name="numbers" />
-            </p>
-
-            <p><input type="submit" name="buttonSubmit" value="添加数据" /></p>
-        </fieldset>
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>日期</th>
+                <th>菜品名称</th>
+                <th>单位</th>
+                <th>数量</th>
+                <th>单价</th>
+                <th>总价</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2023-03-23</td>
+                <td>鱼香肉丝</td>
+                <td>辣的好吃</td>
+                <td>2</td>
+                <td>15.00</td>
+                <td>30.00</td>
+                <td><button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button></td>
+            </tr>
+            <tr>
+                <td>2023-03-23</td>
+                <td>宫保鸡丁</td>
+                <td>有点辣</td>
+                <td>3</td>
+                <td>18.00</td>
+                <td>54.00</td>
+                <td><button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <form>
+        <h2>添加记录</h2>
+        <label>日期:</label>
+        <input type="date" id="dateInput">
+        <label>菜品名称:</label>
+        <input type="text" id="nameInput">
+        <label>描述:</label>
+        <input type="text" id="descriptionInput">
+        <label>数量:</label>
+        <input type="number" id="quantityInput">
+        <label>单价:</label>
+        <input type="number" id="priceInput" step="0.01">
+        <button type="button" onclick="addRow()">添加</button>
     </form>
+
+    <script>
+        function addRow() {
+            var table = document.getElementById("myTable");
+            var date = document.getElementById("dateInput").value;
+            var name = document.getElementById("nameInput").value;
+            var description = document.getElementById("descriptionInput").value;
+            var quantity = document.getElementById("quantityInput").value;
+            var price = document.getElementById("priceInput").value;
+            var total = (quantity * price).toFixed(2);
+            var row = table.insertRow(table.rows.length);
+            var dateCell = row.insertCell(0);
+            var nameCell = row.insertCell(1);
+            var descriptionCell = row.insertCell(2);
+            var quantityCell = row.insertCell(3);
+            var priceCell = row.insertCell(4);
+            var totalCell = row.insertCell(5);
+            var actionCell = row.insertCell(6);
+            dateCell.innerHTML = date;
+            nameCell.innerHTML = name;
+            descriptionCell.innerHTML = description;
+            quantityCell.innerHTML = quantity;
+            priceCell.innerHTML = price;
+            totalCell.innerHTML = total;
+            actionCell.innerHTML = '<button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button>';
+            clearForm();
+        }
+        function editRow(button) {
+            var row = button.parentNode.parentNode;
+            var date = row.cells[0].innerHTML;
+            var name = row.cells[1].innerHTML;
+            var description = row.cells[2].innerHTML;
+            var quantity = row.cells[3].innerHTML;
+            var price = row.cells[4].innerHTML;
+            var total = row.cells[5].innerHTML;
+            document.getElementById("dateInput").value = date;
+            document.getElementById("nameInput").value = name;
+            document.getElementById("descriptionInput").value = description;
+            document.getElementById("quantityInput").value = quantity;
+            document.getElementById("priceInput").value = price;
+            row.parentNode.removeChild(row);
+        }
+
+        function deleteRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        function clearForm() {
+            document.getElementById("dateInput").value = "";
+            document.getElementById("nameInput").value = "";
+            document.getElementById("descriptionInput").value = "";
+            document.getElementById("quantityInput").value = "";
+            document.getElementById("priceInput").value = "";
+        }
+    </script>
+
+
 </body>
 
 </html>
