@@ -377,10 +377,14 @@
             document.getElementById("menu_change").style.display = 'none';
             
             const name = document.getElementById("dishname_").value;
-            const units = document.getElementById("unit_").value;
+            const unit = document.getElementById("unit_").value;
             const category = document.getElementById("superclass_").value;
             const type = document.getElementById("subclass_").value;
             var json_data = window.JSON.stringify({ "name": name,"unit":unit,"category":category,"type":type});
+            if(name=="" || unit=="" || category=="" || type==""){
+                alert("请将信息填写完整！");
+                return;
+            }
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
             xhr.open("POST", "http://127.0.0.1:5000/api/v1/ingredients");
@@ -389,10 +393,11 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4) {
                     if (xhr.status >= 200 && xhr.status <300){
-                        alert("保存成功！");ingredient_unit
+                        alert("保存成功！");
                     }
                     else {
-                        alert("保存失败失败！");
+                        var response_data = JSON.parse(xhr.response)
+						alert("保存失败！"+response_data["error"]);
                     }
                 } 
             } 
