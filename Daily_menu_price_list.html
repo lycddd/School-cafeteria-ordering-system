@@ -73,6 +73,19 @@
             width: 20%;
         }
     </style>
+    <script>
+         var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://127.0.0.1:5000/api/v1/session");
+        xhr.withCredentials=true;
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status > 300) {
+                    window.location.href = "./Login.html";
+                }
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -127,7 +140,7 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-               
+
                 <td style="text-align: left;">
                     <a id="tr_2_a1" onclick="tr_change(2,0)"
                         style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
@@ -142,7 +155,7 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-              
+
                 <td style="text-align: left;">
                     <a id="tr_3_a1" onclick="tr_change(3,0)"
                         style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
@@ -157,7 +170,7 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+
                 <td style="text-align: left;">
                     <a id="tr_4_a1" onclick="tr_change(4,0)"
                         style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
@@ -172,7 +185,7 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+
                 <td style="text-align: left;">
                     <a id="tr_5_a1" onclick="tr_change(5,0)"
                         style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
@@ -187,7 +200,7 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+
                 <td style="text-align: left;">
                     <a id="tr_6_a1" onclick="tr_change(6,0)"
                         style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
@@ -202,7 +215,7 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+
                 <td style="text-align: left;">
                     <a id="tr_7_a1" onclick="tr_change(7,0)"
                         style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
@@ -217,7 +230,7 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-               
+
                 <td style="text-align: left;">
                     <a id="tr_8_a1" onclick="tr_change(8,0)"
                         style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
@@ -232,7 +245,7 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+
                 <td style="text-align: left;">
                     <a id="tr_9_a1" onclick="tr_change(9,0)"
                         style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
@@ -247,7 +260,7 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-               
+
                 <td style="text-align: left;">
                     <a id="tr_10_a1" onclick="tr_change(10,0)"
                         style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
@@ -262,7 +275,7 @@
                 <td>1</td>
                 <td>1</td>
                 <td>1</td>
-                
+
                 <td style="text-align: left;">
                     <a id="tr_11_a1" onclick="tr_change(11,0)"
                         style="width: 40%;margin-left: 10%;background-color: white;color: blue;">修改</a>
@@ -328,18 +341,18 @@
         function tr_change(row, cell) {
             var row_change = document.getElementById("t_row"), cell_change = document.getElementById("t_cell");
             var date_change = document.getElementById("date_"), dishname_change = document.getElementById("dishname_"), price_change = document.getElementById("price_"), unit_change = document.getElementById("unit_"), superclass_chaneg = document.getElementById("superclass_"), subclass_change = document.getElementById("subclass_"),
-                date_table = document.getElementById("table_1").rows[row].cells[cell], dishname_table = document.getElementById("table_1").rows[row].cells[cell + 1],  superclass_table = document.getElementById("table_1").rows[row].cells[cell + 2], subclass_table = document.getElementById("table_1").rows[row].cells[cell + 3],  price_table = document.getElementById("table_1").rows[row].cells[cell + 4], unit_table = document.getElementById("table_1").rows[row].cells[cell + 5];
+                date_table = document.getElementById("table_1").rows[row].cells[cell], dishname_table = document.getElementById("table_1").rows[row].cells[cell + 1], superclass_table = document.getElementById("table_1").rows[row].cells[cell + 2], subclass_table = document.getElementById("table_1").rows[row].cells[cell + 3], price_table = document.getElementById("table_1").rows[row].cells[cell + 4], unit_table = document.getElementById("table_1").rows[row].cells[cell + 5];
             document.getElementById("menu_change").style.display = '';
             document.getElementById("menu_table").style.display = 'none';
             date_change.value = date_table.innerText;
             dishname_change.value = dishname_table.innerText;
-           
+
             price_change.value = price_table.innerText;
-           
+
             unit_change.value = unit_table.innerText;
-           
-            subclass_change.value=subclass_table.innerText;
-            superclass_chaneg.value=superclass_table.innerText;
+
+            subclass_change.value = subclass_table.innerText;
+            superclass_chaneg.value = superclass_table.innerText;
             row_change.value = row;
             cell_change.value = cell;
 
@@ -365,42 +378,42 @@
         function save() {
             var row = Number(document.getElementById("t_row").value), cell = Number(document.getElementById("t_cell").value);
             var date_change = document.getElementById("date_"), dishname_change = document.getElementById("dishname_"), price_change = document.getElementById("price_"), unit_change = document.getElementById("unit_"), superclass_chaneg = document.getElementById("superclass_"), subclass_change = document.getElementById("subclass_"),
-                date_table = document.getElementById("table_1").rows[row].cells[cell], dishname_table = document.getElementById("table_1").rows[row].cells[cell + 1],  superclass_table = document.getElementById("table_1").rows[row].cells[cell + 2], subclass_table = document.getElementById("table_1").rows[row].cells[cell + 3],  price_table = document.getElementById("table_1").rows[row].cells[cell + 4], unit_table = document.getElementById("table_1").rows[row].cells[cell + 5];
+                date_table = document.getElementById("table_1").rows[row].cells[cell], dishname_table = document.getElementById("table_1").rows[row].cells[cell + 1], superclass_table = document.getElementById("table_1").rows[row].cells[cell + 2], subclass_table = document.getElementById("table_1").rows[row].cells[cell + 3], price_table = document.getElementById("table_1").rows[row].cells[cell + 4], unit_table = document.getElementById("table_1").rows[row].cells[cell + 5];
 
             date_table.innerText = date_change.value;
             dishname_table.innerText = dishname_change.value;
             price_table.innerText = price_change.value;
             unit_table.innerText = unit_change.value;
-            subclass_table.innerText=subclass_change.value;
-            superclass_table.innerText=superclass_chaneg.value;
+            subclass_table.innerText = subclass_change.value;
+            superclass_table.innerText = superclass_chaneg.value;
             document.getElementById("menu_table").style.display = '';
             document.getElementById("menu_change").style.display = 'none';
-            
+
             const name = document.getElementById("dishname_").value;
             const unit = document.getElementById("unit_").value;
             const category = document.getElementById("superclass_").value;
             const type = document.getElementById("subclass_").value;
-            var json_data = window.JSON.stringify({ "name": name,"unit":unit,"category":category,"type":type});
-            if(name=="" || unit=="" || category=="" || type==""){
+            if (name == "" || unit == "" || category == "" || type == "") {
                 alert("请将信息填写完整！");
                 return;
             }
+            var json_data = window.JSON.stringify({ "name": name, "unit": unit, "category": category, "type": type });
             var xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
+            xhr.withCredentials = true;  
             xhr.open("POST", "http://127.0.0.1:5000/api/v1/ingredients");
-            xhr.setRequestHeader("Content-type", "application/json"); 
+            xhr.setRequestHeader("Content-type", "application/json");
             xhr.send(json_data);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4) {
-                    if (xhr.status >= 200 && xhr.status <300){
+                    if (xhr.status >= 200 && xhr.status < 300) {
                         alert("保存成功！");
                     }
                     else {
                         var response_data = JSON.parse(xhr.response)
-						alert("保存失败！"+response_data["error"]);
+                        alert("保存失败！" + response_data["error"]);
                     }
-                } 
-            } 
+                }
+            }
         }
     </script>
 </body>
