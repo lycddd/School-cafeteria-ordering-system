@@ -90,45 +90,52 @@
 </head>
 
 <body>
-    <div class="nav">
-        <h1>食堂订菜系统</h1>
-        <br>
-        <ul>
-            <a href="">
-                <li>学校信息</li>
-            </a>
-            <a href="Daily_menu_price_list.html">
-                <li>每日菜品价目表</li>
-            </a>
-            <a href="Order_information.html">
-                <li>导出汇总</li>
-            </a>
-            <a href="">
-                <li>退出登录</li>
-            </a>
-        </ul>
-    </div>
-    <div id="schools-container"></div>
-    <form>
-        <input type="text" id="schoolName" value="">
-        <input type="text" id="schoolAddress" value="">
-        <button type="button" onclick="addSchool()">添加学校和地址</button>
-    </form>
-    <script>
-        const formData = {};
+<div class="nav">
+    <h1>食堂订菜系统</h1>
+    <br>
+    <ul>
+        <a href="">
+            <li>学校信息</li>
+        </a>
+        <a href="Daily_menu_price_list.html">
+            <li>每日菜品价目表</li>
+        </a>
+        <a href="Order_information.html">
+            <li>导出汇总</li>
+        </a>
+        <a href="">
+            <li>退出登录</li>
+        </a>
+    </ul>
+</div>
+<div id="schools-container"></div>
+<form>
+    学校：<input type="text" id="schoolName" value="">
+    地址：<input type="text" id="schoolAddress" value="">
+    <button type="button" onclick="addSchool()">添加学校和地址</button>
+</form>
+<script>
+    const formData = {};
 
-        // Create a new school
-        function addSchool() {
-            var a, schoolName;
-            schoolName = document.getElementById("schoolName").value;
-            schoolAddress = document.getElementById("schoolAddress").value;
+    // Create a new school
+    function addSchool() {
+        var a, schoolName;
+        schoolName = document.getElementById("schoolName").value;
+        schoolAddress = document.getElementById("schoolAddress").value;
 
-
-
-            // Create the school container
-            const schoolContainer = document.createElement('div');
-            schoolContainer.id = schoolName;
-            schoolContainer.innerHTML = `
+        var json_data = window.JSON.stringify({"name": schoolName, "address": schoolAddress});
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://127.0.0.1:5000/api/v1/schools");
+        xhr.withCredentials = true;
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(json_data);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    // Create the school container
+                    const schoolContainer = document.createElement('div');
+                    schoolContainer.id = schoolName;
+                    schoolContainer.innerHTML = `
             <h2>${schoolName}</h2>
             <form>
               <label>客户名称:</label>
@@ -137,55 +144,39 @@
               <input type="tel" name="customerPhone" required>
               <button type="button" onclick="addCustomer('${schoolName}')">添加</button>
               <button type="button" onclick="clearCustomerForm('${schoolName}')">清除</button>
-            </form> 
+            </form>
             <div class="customers-container"></div>
           `;
-            document.getElementById('schools-container').appendChild(schoolContainer);
+                    document.getElementById('schools-container').appendChild(schoolContainer);
 
-            // Add the school to the form data
-            formData[schoolName] = { customers: [] };
-
-
-        }
-        function addSchool() {
-            const schoolName = document.getElementById("schoolName").value;
-            const schoolAddress = document.getElementById("schoolAddress").value;
-            var json_data = window.JSON.stringify({ "name": schoolName, "address": schoolAddress });
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "http://127.0.0.1:5000/api/v1/schools");
-            xhr.withCredentials = true;
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.send(json_data);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status >= 200 && xhr.status < 300) {
-                        alert("添加成功！");
-                    }
-                    else {
-                        var response_data = JSON.parse(xhr.response)
-                        alert("添加失败！");
-                    }
+                    // Add the school to the form data
+                    formData[schoolName] = {customers: []};
+                } else {
+                    var response_data = JSON.parse(xhr.response)
+                    alert("添加失败！" + response_data["error"]);
                 }
             }
         }
-        // Add a customer to a school
-        function addCustomer(schoolName) {
-            const customerForm = document.getElementById(schoolName).querySelector('form');
-            const customerInputs = customerForm.querySelectorAll('input');
-            const customerName = customerInputs[0].value.trim();
-            const customerPhone = customerInputs[1].value.trim();
+    }
 
-            // Check if customer name already exists
-            const customerNames = formData[schoolName].customers.map(customer => customer.name);
-            if (customerNames.includes(customerName)) {
-                alert('Customer name already exists for this school!');
-                return;
-            }
+    // Add a customer to a school
+    function addCustomer(schoolName) {
+        const customerForm = document.getElementById(schoolName).querySelector('form');
+        const customerInputs = customerForm.querySelectorAll('input');
+        const customerName = customerInputs[0].value.trim();
+        const customerPhone = customerInputs[1].value.trim();
 
-            // Create the customer container
-            const customerContainer = document.createElement('div');
-            customerContainer.className = 'customer-container';
-            const customerInfo = `
+        // Check if customer name already exists
+        const customerNames = formData[schoolName].customers.map(customer => customer.name);
+        if (customerNames.includes(customerName)) {
+            alert('Customer name already exists for this school!');
+            return;
+        }
+
+        // Create the customer container
+        const customerContainer = document.createElement('div');
+        customerContainer.className = 'customer-container';
+        const customerInfo = `
             <div>
               <label>客户名称:</label>
               <span>${customerName}</span>
@@ -194,91 +185,78 @@
               <label>电话号码:</label>
               <span>${customerPhone}</span>
             </div>
-            <div>
-              <label>地址:</label>
-              <span>${customerAddress}</span>
-        </div>
         <button type="button" onclick="editCustomer('${schoolName}', '${customerName}')">修改</button>
         <button type="button" onclick="deleteCustomer('${schoolName}', '${customerName}')">删除</button>
         <a href="./Order_information.html">订单信息</a>
       `;
-            customerContainer.innerHTML = customerInfo;
-            document.getElementById(schoolName).querySelector('.customers-container').appendChild(customerContainer);
+        customerContainer.innerHTML = customerInfo;
+        document.getElementById(schoolName).querySelector('.customers-container').appendChild(customerContainer);
 
-            // Add the customer to the form data
-            formData[schoolName].customers.push({
-                name: customerName,
-                phone: customerPhone,
-                address: customerAddress,
-            });
+        // Add the customer to the form data
+        formData[schoolName].customers.push({
+            name: customerName,
+            phone: customerPhone
+        });
 
-            // Clear the customer form
-            clearCustomerForm(schoolName);
-
-
-        }
-
-        // Edit a customer for a school
-        function editCustomer(schoolName, customerName) {
-            // Find the customer in the form data
-            const customerIndex = formData[schoolName].customers.findIndex(customer => customer.name === customerName);
-            const customer = formData[schoolName].customers[customerIndex];
-
-            // Populate the customer form with the customer's information
-            const customerForm = document.getElementById(schoolName).querySelector('form');
-            customerForm.customerName.value = customer.name;
-            customerForm.customerPhone.value = customer.phone;
-            customerForm.customerAddress.value = customer.address;
-
-            // Remove the old customer container from the list
-            const oldCustomerContainer = document.getElementById(schoolName).querySelector(`.customers-container > div:nth-child(${customerIndex + 1})`);
-            oldCustomerContainer.remove();
-
-            // Remove the customer from the form data
-            formData[schoolName].customers.splice(customerIndex, 1);
-        }
-
-        // Delete a customer for a school
-        function deleteCustomer(schoolName, customerName) {
-            // Find the customer in the form data
-            const customerIndex = formData[schoolName].customers.findIndex(customer => customer.name === customerName);
-
-            // Remove the customer container from the list
-            const customerContainer = document.getElementById(schoolName).querySelector(`.customers-container > div:nth-child(${customerIndex + 1})`);
-            customerContainer.remove();
-
-            // Remove the customer from the form data
-            formData[schoolName].customers.splice(customerIndex, 1);
-        }
-
-        // Clear the customer form for a school
-        function clearCustomerForm(schoolName) {
-            const customerForm = document.getElementById(schoolName).querySelector('form');
-            customerForm.reset();
-        }
-
-        function addCustomer() {
-            const customerName = document.getElementById("customerName").value;
-            const customerPhone = document.getElementById("customerPhone").value;
-            var json_data = window.JSON.stringify({ "customerName": customerName, "customerPhone": customerPhone });
-            var xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-            xhr.open("POST", "http://127.0.0.1:5000/api/v1/customers");
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.send(json_data);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status >= 200 && xhr.status < 300) {
-                        alert("添加成功！");
-                    }
-                    else {
-                        var response_data = JSON.parse(xhr.response)
-                        alert("添加失败！");
-                    }
+        const json_data = window.JSON.stringify({"name": customerName, "school": schoolName});
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.open("POST", "http://127.0.0.1:5000/api/v1/customers");
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(json_data);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    alert("添加成功！");
+                } else {
+                    var response_data = JSON.parse(xhr.response)
+                    alert("添加失败！");
                 }
             }
         }
-    </script>
+        // Clear the customer form
+        clearCustomerForm(schoolName);
+    }
+
+    // Edit a customer for a school
+    function editCustomer(schoolName, customerName) {
+        // Find the customer in the form data
+        const customerIndex = formData[schoolName].customers.findIndex(customer => customer.name === customerName);
+        const customer = formData[schoolName].customers[customerIndex];
+
+        // Populate the customer form with the customer's information
+        const customerForm = document.getElementById(schoolName).querySelector('form');
+        customerForm.customerName.value = customer.name;
+        customerForm.customerPhone.value = customer.phone;
+        customerForm.customerAddress.value = customer.address;
+
+        // Remove the old customer container from the list
+        const oldCustomerContainer = document.getElementById(schoolName).querySelector(`.customers-container > div:nth-child(${customerIndex + 1})`);
+        oldCustomerContainer.remove();
+
+        // Remove the customer from the form data
+        formData[schoolName].customers.splice(customerIndex, 1);
+    }
+
+    // Delete a customer for a school
+    function deleteCustomer(schoolName, customerName) {
+        // Find the customer in the form data
+        const customerIndex = formData[schoolName].customers.findIndex(customer => customer.name === customerName);
+
+        // Remove the customer container from the list
+        const customerContainer = document.getElementById(schoolName).querySelector(`.customers-container > div:nth-child(${customerIndex + 1})`);
+        customerContainer.remove();
+
+        // Remove the customer from the form data
+        formData[schoolName].customers.splice(customerIndex, 1);
+    }
+
+    // Clear the customer form for a school
+    function clearCustomerForm(schoolName) {
+        const customerForm = document.getElementById(schoolName).querySelector('form');
+        customerForm.reset();
+    }
+</script>
 </body>
 
 </html>
