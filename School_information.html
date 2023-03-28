@@ -152,6 +152,7 @@
                         schoolContainer.id = schoolName;
                         schoolContainer.innerHTML = `
             <h2>${schoolName}</h2>
+            <button type="button" onclick="deleteSchool('${schoolName}')">删除学校</button>
             <form>
               <label>客户名称:</label>
               <input type="text" name="customerName" required>
@@ -221,7 +222,7 @@
                 phone: customerPhone
             });
 
-            const json_data = window.JSON.stringify({ "name": customerName, "school": schoolName});
+            const json_data = window.JSON.stringify({ "name": customerName, "school": schoolName });
             const xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
             xhr.open("POST", "http://127.0.0.1:5000/api/v1/customers");
@@ -230,12 +231,12 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4) {
                     if (xhr.status >= 200 && xhr.status < 300) {
-                    } else {    
+                    } else {
                         var response_data = JSON.parse(xhr.response)
                     }
                 }
             }
-            const json_data1 = window.JSON.stringify({"name": Contact, "phone": customerPhone });
+            const json_data1 = window.JSON.stringify({ "name": Contact, "phone": customerPhone });
             const xhr1 = new XMLHttpRequest();
             xhr1.withCredentials = true;
             xhr1.open("POST", "http://127.0.0.1:5000/api/v1/contacts");
@@ -253,6 +254,13 @@
             }
             // Clear the customer form
             clearCustomerForm(schoolName);
+        }
+        //删除学校
+        function deleteSchool(schoolName) {
+            const schoolContainer = document.getElementById(schoolName);
+            schoolContainer.remove();
+            // Remove the school from the form data
+            delete formData[schoolName];
         }
 
         // Edit a customer for a school
