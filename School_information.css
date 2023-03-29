@@ -1,177 +1,53 @@
-@keyframes slide-in {
-    0% {
-        transform: translateY(-100%);
-    }
-
-    100% {
-        transform: translateY(0);
-    }
-}
-
-@keyframes font-grow {
-    0% {
-        font-size: 20px;
-    }
-
-    100% {
-        font-size: 26px;
-    }
-}
-
-
-.nav_div{
-    float: left;
-    background-color: #007bff;
-    width: 100%;
-    margin-bottom: 70px;
-}
-
-/* 导航菜单样式 */
-.navbar {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: #fff;
-	padding: 10px 50px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.adschool {
+	width: 24%;
 	position: fixed;
-	width: 100%;
-	z-index: 999;
-}
-
-.navbar-brand img {
-	height: 60px;
-	transition: all 0.3s ease;
-}
-
-.navbar-brand img:hover {
-	transform: rotate(360deg);
-}
-
-.navbar-links {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.navbar-nav {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.nav-item {
-	margin: 0 15px;
-	position: relative;
-}
-
-.nav-item:after {
-	content: "";
-	display: block;
-	position: absolute;
-	bottom: -5px;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 0%;
-	height: 2px;
-	background-color: #007bff;
-	transition: all 0.3s ease;
-}
-
-.nav-item:hover:after {
-	width: 100%;
-}
-
-.nav-link {
-	color: #333;
-	font-weight: 500;
-	text-transform: uppercase;
-	transition: all 0.3s ease;
-	display: block;
-	padding: 10px 0;
-	position: relative;
-}
-
-.nav-link:hover {
-	color: #007bff;
-}
-
-.dropdown-menu {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	min-width: 200px;
-	padding: 10px 0;
+	top: 90px;
+	left: 8%;
 	background-color: #fff;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	display: none;
-}
-
-.dropdown-item {
-	display: block;
-	padding: 10px 20px;
 	color: #333;
-	font-weight: 500;
-	transition: all 0.3s ease;
 }
 
-.dropdown-item:hover {
-	background-color: #007bff;
-	color: #fff;
-}
+button {
 
-nav a {
-  text-decoration: none;
-}
-
-li:hover {
-    animation-name: font-grow;
-    animation-duration: 0.1s;
-    animation-fill-mode: forwards;
-}
-.school_table {
-    width: 100%;
-    border-right: 2px solid black;
-    border-bottom: 2px solid black;
-}
-
-.school_table .school_tr th {
-    float: left;
-    width: 20%;
-}
-
-.school_table .span {
-    float: left;
-    width: 20%;
-}
-
-.button {
-    background-color: rgb(138, 187, 224);
-    margin-left: 15%;
-    float: left;
-    width: 15%;
-    height: 30px;
+    border: none;
+    /*移除按钮边框*/
+    border-radius: 5px;
+    /*设置按钮圆角*/
     text-align: center;
-    cursor: pointer;
-}
-
-.section {
-    width: 70%;
-    float: right;
-
-}
-
-.consumer_table {
+    /*设置文字居中*/
+    text-decoration: none;
+    /*移除文字下划线*/
     display: inline-block;
-    width: 80%;
-
+    /*设置按钮为块级元素*/
+    font-size: 22px;
+    /*设置按钮文字大小*/
+    margin: 10px 0;
+    /*设置按钮外边距*/
+    cursor: pointer;
+    /*设置鼠标指针为手形*/
+    transition: background-color 0.3s;
+    /*设置按钮背景颜色渐变过渡效果*/
+    width: 100px;
 }
 
-.consumer_table tr th {
-    margin-top: 0;
-    width: 10%;
-    height: 50px;
+button:hover {
+    background-color: darkgray;
+    /*设置鼠标悬停时的按钮背景颜色*/
+    color: white;
+}
+
+.partschool{
+	
+	margin-left: 32%;
+	width: 60%;
+	
+}
+.partschool h2{
+	display: inline-block;
+	width: 80%;
+}
+
+.customers-container{
+	float: left;
+	margin: 3px;
 }
