@@ -32,7 +32,7 @@
 				return;
 			}
 			const xhr = new XMLHttpRequest()
-			var json_data = window.JSON.stringify({ "name": name,"password":password,"password_repeat":password_repeat});
+			var json_data = window.JSON.stringify({ "userName": name,"userPassword":password,"password_repeat":password_repeat});
 			xhr.open('POST', 'http://127.0.0.1:5000/api/v1/users');
 			xhr.setRequestHeader("Content-type", "application/json"); 
 			xhr.send(json_data);

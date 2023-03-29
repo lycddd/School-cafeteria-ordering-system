@@ -36,7 +36,7 @@
 		function login() {
 			const name = document.getElementById("name").value;
 			const password = document.getElementById("password").value;
-			var json_data = window.JSON.stringify({ "name": name,"password":password});
+			var json_data = window.JSON.stringify({ "userName": name,"userPassword":password});
 			var xhr = new XMLHttpRequest();
 			xhr.open("POST", "http://127.0.0.1:5000/api/v1/session");
 			xhr.withCredentials = true;
