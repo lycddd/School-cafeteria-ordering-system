@@ -21,17 +21,20 @@
 </head>
 
 <body>
-	<div class="div">
-		<h2>食堂订菜系统</h2>
+	<div class="container">
+		<h1>食堂订菜系统</h1>
 		<form method="POST" action="#" class="form">
-			账号：&emsp;&emsp;<input type="text" id="name" />
-			<br /> <br />
-			密码：&emsp;&emsp;<input tbuype="password" id="password" />
-			<br /> <br />
-			<button href="#" >忘记密码</button>
-			<button href="Register.html" >注册新账户</button>
-			<button onclick="login()" >登录</button>
+			<label for="name">账号</label>
+			<input type="text" id="name" name="name" placeholder="请输入您的姓名">
+
+			<label for="password">密码</label>
+			<input type="password" id="password" name="password" placeholder="请输入您的密码">
+			<button onclick="login()">登录</button>
+			<button href="#">忘记密码</button>
+			<a href="Register.html">注册新账户</a>
+		</form>
 	</div>
+	
 	<script>
 		function login() {
 			const name = document.getElementById("name").value;

@@ -1,44 +1,67 @@
+body {
+	font-family: Arial, sans-serif;
+	background-color: #F5F5F5;
+}
 
-
-body{
-	font-size: 32px;
-	margin-top: 150px;
-	}
-
-.div{
-	margin-top: 150px;
-	box-shadow: 0 2px 4px black;
-	width: 600px;
-	height: 500px;
-	border-radius: 50px;
-	margin: auto;
-	text-align: center;
+.container {
+	margin: 50px auto;
+	max-width: 500px;
+	background-color: #fff;
 	padding: 30px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	border-radius: 5px;
 }
-input{
-	font-size: 26px;
+
+h1 {
+	font-size: 28px;
+	text-align: center;
+	margin-bottom: 30px;
 }
-.form{
-	margin-top: 75px;
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+label {
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	color: #555;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+	padding: 10px;
+	border: 2px solid #ccc;
+	border-radius: 5px;
+	font-size: 16px;
+	margin-bottom: 20px;
+}
+a{
+	text-align: center;
+	text-decoration: none;
+	background-color: #007bff;
+	color: #fff;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	font-size: 18px;
+	cursor: pointer;
+	margin-bottom: 2px;
 }
 button {
-	
-	background-color: #4CAF50; /*设置按钮背景颜色*/
-	color: white; /*设置按钮文字颜色*/
-	border: none; /*移除按钮边框*/
-	border-radius: 5px; /*设置按钮圆角*/
-	text-align: center; /*设置文字居中*/
-	text-decoration: none; /*移除文字下划线*/
-	display: inline-block; /*设置按钮为块级元素*/
-	font-size: 24px; /*设置按钮文字大小*/
-	margin: 10px 0; /*设置按钮外边距*/
-	cursor: pointer; /*设置鼠标指针为手形*/
-	transition: background-color 0.3s; /*设置按钮背景颜色渐变过渡效果*/
-	width: 140px;
-	height: 40px;
-  }
-  
-  button:hover {
-	background-color: #3e8e41; /*设置鼠标悬停时的按钮背景颜色*/
-  }
+	background-color: #007bff;
+	color: #fff;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	font-size: 18px;
+	cursor: pointer;
+	margin-bottom: 2px;
+}
 
+input[type="submit"]:hover {
+	background-color: #0069d9;
+}
