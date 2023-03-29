@@ -150,7 +150,7 @@
                     <a onclick="changeIframeSrc('Export.html')" class="nav-link">导出汇总</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">退出登录</a>
+                    <a href="Login.html" onclick="Logout()" class="nav-link">退出登录</a>
                 </li>
             </ul>
         </div>
@@ -160,6 +160,19 @@
     <iframe src="Login.html" height="100%" width="100%" onload="resizeIframe(this)"></iframe>
 </div>
 <script>
+    function Logout(){
+    var xhr = new XMLHttpRequest();
+		xhr.open("DELETE", "http://127.0.0.1:5000/api/v1/session");
+		xhr.withCredentials = true;
+		xhr.send();
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				if (xhr.status < 300) {
+					window.location.href = "Login.html";
+				}
+			};
+		}
+    }
     const frame = document.querySelector('iframe');
     function resizeIframe() {
         const nav_height = document.querySelector('.nav_div').offsetHeight;
