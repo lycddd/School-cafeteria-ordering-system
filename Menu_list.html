@@ -108,9 +108,7 @@
             var unit = document.getElementById("unitInput").value;
             var categury = document.getElementById("categuryInput").value;
             var type = document.getElementById("typeInput").value;
-            
             var row = table.insertRow(table.rows.length);
-            
             var nameCell = row.insertCell(0);
             var unitCell = row.insertCell(1);
             var categuryCell = row.insertCell(2);
@@ -126,17 +124,14 @@
         }
         function editRow(button) {
             var row = button.parentNode.parentNode;
-            var date = row.cells[0].innerHTML;
-            var name = row.cells[1].innerHTML;
-            var description = row.cells[2].innerHTML;
-            var quantity = row.cells[3].innerHTML;
-            var price = row.cells[4].innerHTML;
-            var total = row.cells[5].innerHTML;
-            document.getElementById("dateInput").value = date;
+            var name = row.cells[0].innerHTML;
+            var unit = row.cells[1].innerHTML;
+            var categury = row.cells[2].innerHTML;
+            var type = row.cells[3].innerHTML;
             document.getElementById("nameInput").value = name;
-            document.getElementById("descriptionInput").value = description;
-            document.getElementById("quantityInput").value = quantity;
-            document.getElementById("priceInput").value = price;
+            document.getElementById("unitInput").value = unit;
+            document.getElementById("categuryInput").value = categury;
+            document.getElementById("typeInput").value = type;
             row.parentNode.removeChild(row);
         }
 

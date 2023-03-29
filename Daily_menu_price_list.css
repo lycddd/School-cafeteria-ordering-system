@@ -19,7 +19,7 @@
 }
 
 
-.nav_div{
+.nav_div {
     float: left;
     background-color: #007bff;
     width: 100%;
@@ -28,103 +28,103 @@
 
 /* 导航菜单样式 */
 .navbar {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: #fff;
-	padding: 10px 50px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	position: fixed;
-	width: 100%;
-	z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    z-index: 999;
 }
 
 .navbar-brand img {
-	height: 60px;
-	transition: all 0.3s ease;
+    height: 60px;
+    transition: all 0.3s ease;
 }
 
 .navbar-brand img:hover {
-	transform: rotate(360deg);
+    transform: rotate(360deg);
 }
 
 .navbar-links {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .navbar-nav {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0;
-	padding: 0;
-	list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .nav-item {
-	margin: 0 15px;
-	position: relative;
+    margin: 0 15px;
+    position: relative;
 }
 
 .nav-item:after {
-	content: "";
-	display: block;
-	position: absolute;
-	bottom: -5px;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 0%;
-	height: 2px;
-	background-color: #007bff;
-	transition: all 0.3s ease;
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0%;
+    height: 2px;
+    background-color: #007bff;
+    transition: all 0.3s ease;
 }
 
 .nav-item:hover:after {
-	width: 100%;
+    width: 100%;
 }
 
 .nav-link {
-	color: #333;
-	font-weight: 500;
-	text-transform: uppercase;
-	transition: all 0.3s ease;
-	display: block;
-	padding: 10px 0;
-	position: relative;
+    color: #333;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    display: block;
+    padding: 10px 0;
+    position: relative;
 }
 
 .nav-link:hover {
-	color: #007bff;
+    color: #007bff;
 }
 
 .dropdown-menu {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	min-width: 200px;
-	padding: 10px 0;
-	background-color: #fff;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    padding: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: none;
 }
 
 .dropdown-item {
-	display: block;
-	padding: 10px 20px;
-	color: #333;
-	font-weight: 500;
-	transition: all 0.3s ease;
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
 .dropdown-item:hover {
-	background-color: #007bff;
-	color: #fff;
+    background-color: #007bff;
+    color: #fff;
 }
 
 nav a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 li:hover {
@@ -133,109 +133,109 @@ li:hover {
     animation-fill-mode: forwards;
 }
 
-.menu_table table {
-    float: left;
-    width: 80%;
-    margin-left: 10%;
-    margin-top: 20px;
-}
 
-
-.menu_table table tr th {
-    width: 10%;
-    text-align: center;
-}
-
-.menu_table table tr td {
-    width: 10%;
-    text-align: center;
-}
-
-.menu_table a {
-    background-color: darkgray;
-    margin-left: 46%;
-    float: left;
-    width: 7%;
-    height: 30px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.menu_table button {
-    background-color: darkgray;
-    margin-left: 46%;
-    float: left;
-    width: 7%;
-    height: 30px;
-    text-align: center;
-    cursor: pointer;
-}
-
-
-.menu_change {
-    margin-left: 10%;
-    float: left;
-    width: 80%;
-    text-align: center;
-}
-
-.span {
-    float: left;
-    width: 20%;
-}
 
 button {
-	background-color: #4CAF50; /*设置按钮背景颜色*/
-	color: white; /*设置按钮文字颜色*/
-	border: none; /*移除按钮边框*/
-	border-radius: 5px; /*设置按钮圆角*/
-	text-align: center; /*设置文字居中*/
-	text-decoration: none; /*移除文字下划线*/
-	display: inline-block; /*设置按钮为块级元素*/
-	font-size: 16px; /*设置按钮文字大小*/
-	margin: 10px 0; /*设置按钮外边距*/
-	cursor: pointer; /*设置鼠标指针为手形*/
-	transition: background-color 0.3s; /*设置按钮背景颜色渐变过渡效果*/
-	width: 100px;
-  }
-  
-  button:hover {
-	background-color: #3e8e41; /*设置鼠标悬停时的按钮背景颜色*/
-  }
+
+    border: none;
+    /*移除按钮边框*/
+    border-radius: 5px;
+    /*设置按钮圆角*/
+    text-align: center;
+    /*设置文字居中*/
+    text-decoration: none;
+    /*移除文字下划线*/
+    display: inline-block;
+    /*设置按钮为块级元素*/
+    font-size: 16px;
+    /*设置按钮文字大小*/
+    margin: 10px 0;
+    /*设置按钮外边距*/
+    cursor: pointer;
+    /*设置鼠标指针为手形*/
+    transition: background-color 0.3s;
+    /*设置按钮背景颜色渐变过渡效果*/
+    width: 100px;
+}
+
+button:hover {
+    background-color: darkgray;
+    /*设置鼠标悬停时的按钮背景颜色*/
+    color: white;
+}
 
 
-  table {
-	border-collapse: collapse; /* 合并边框 */
-	border: 1px solid #ccc; /* 设置边框宽度和颜色 */
-  }
-  table {
-	background-color: #f8f8f8; /* 设置表格背景颜色 */
-	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
-  }
-  thead {
-	background-color: #f2f2f2; /* 设置表头背景颜色 */
-	font-weight: bold; /* 加粗表头文字 */
-  }
-  td, th {
-	padding: 10px; /* 设置单元格内边距 */
-	font-size: 14px; /* 设置字体大小 */
-	text-align: center; /* 居中显示文本 */
-  }
-  tr:hover {
-	background-color: #e0e0e0; /* 设置悬停时的背景颜色 */
-  }
-  table {
-	transition: box-shadow 0.3s ease; /* 添加阴影效果的过渡动画 */
-  }
-  
-  tr:hover {
-	transform: scale(1.05); /* 悬停时缩放效果 */
-	transition: transform 0.3s ease; /* 悬停时的过渡动画 */
-  }
-		  
-  
+table {
+    border-collapse: collapse;
+    /* 合并边框 */
+    border: 1px solid #ccc;
+    /* 设置边框宽度和颜色 */
+}
+
+table {
+    background-color: #f8f8f8;
+    /* 设置表格背景颜色 */
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    /* 添加阴影效果 */
+}
+
+thead {
+    background-color: #f2f2f2;
+    /* 设置表头背景颜色 */
+    font-weight: bold;
+    /* 加粗表头文字 */
+}
+
+td,
+th {
+    padding: 10px;
+    /* 设置单元格内边距 */
+    font-size: 14px;
+    /* 设置字体大小 */
+    text-align: center;
+    /* 居中显示文本 */
+}
+
+tr:hover {
+    background-color: #e0e0e0;
+    /* 设置悬停时的背景颜色 */
+}
+
+table {
+    transition: box-shadow 0.3s ease;
+    /* 添加阴影效果的过渡动画 */
+}
+
+tr:hover {
+    transform: scale(1.05);
+    /* 悬停时缩放效果 */
+    transition: transform 0.3s ease;
+    /* 悬停时的过渡动画 */
+}
+
+.daily {
+    float: left;
+    margin-left: 8%;
+    margin-right: 2%;
+    width: 50%;
+}
+
+.addrecord {
+    
+    width: 32%;
+    position: fixed;
+    top: 80px;
+    right: 8%;
+    background-color: #fff;
+    color: #333;
+}
 
 
-
-
-
+.fixed-container {
+    position: fixed;
+    top: 80px;
+    left: 8%;
+    background-color: #fff;
+    color: #333;
+    padding: 10px;
+}
