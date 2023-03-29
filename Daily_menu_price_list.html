@@ -67,12 +67,85 @@
 
 
     <script>
-        function addRow() {
+        function asyncGet(url) {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", url);
+                xhr.withCredentials = true;
+                xhr.send();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status < 300) {
+                            resolve(JSON.parse(xhr.responseText));
+                        } else {
+                            reject(xhr.responseText);
+                        }
+                    }
+                }
+            });
+        }
+
+        function asyncPost(url, data) {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", url);
+                xhr.withCredentials = true;
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(JSON.stringify(data));
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status < 300) {
+                            resolve(JSON.parse(xhr.responseText));
+                        } else {
+                            reject(xhr.responseText);
+                        }
+                    }
+                }
+            });
+        }
+
+        var priceData;
+
+        async function getPrice() {
+            priceData = await asyncGet("http://127.0.0.1:5000/api/v1/prices");
+            priceData = priceData["data"];
+        }
+        getPrice();
+
+        async function addRow() {
             var table = document.getElementById("myTable");
             var date = document.getElementById("dateInput").value;
             var name = document.getElementById("nameInput").value;
             var price = document.getElementById("priceInput").value;
             var row = table.insertRow(table.rows.length);
+
+            var priceID = null;
+
+
+            if (price.length > 0) {
+                for (let i = 0; i < priceData.length; i++) {
+                    console.log(price, priceData[i]["pricePrice"]);
+                    if (price === priceData[i]["pricePrice"]) {
+                        priceID = priceData[i]["priceID"];
+                        ingredientID = priceData[i]["ingredientID"];
+                        break;
+                    }
+                }
+            }
+            if (priceID == null) {
+                try {
+                    const response = await asyncPost("http://127.0.0.1:5000/api/v1/prices", { "pricePrice": price });
+                    priceData.push({ "priceID": response["priceID"], "pricePrice": price ,"ingredientID":response[ingredientID]});
+                    priceID = response["priceID"];
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+            await asyncPost("http://127.0.0.1:5000/api/v1/prices", {
+                "ingredientID": ingredientID,
+                "pricePrice": price,
+
+            });
             var dateCell = row.insertCell(0);
             var nameCell = row.insertCell(1);
             var priceCell = row.insertCell(2);
@@ -81,27 +154,10 @@
             nameCell.innerHTML = name;
             priceCell.innerHTML = price;
             actionCell.innerHTML = '<button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button>';
+
+
             clearForm();
-            const ingredientName = document.getElementById("dateInput").value;
-            const unitName = document.getElementById("nameInput").value;
-            const categoryName = document.getElementById("priceInput").value;
-            var json_data = window.JSON.stringify({ "ingredientName": ingredientName, "unitName": unitName, "categoryName": categoryName, "typeName": typeName });
-            var xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-            xhr.open("POST", "http://127.0.0.1:5000/api/v1/ingredients");
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.send(json_data);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status >= 200 && xhr.status < 300) {
-                        alert("添加成功！");
-                    }
-                    else {
-                        var response_data = JSON.parse(xhr.response)
-                        alert("添加失败！" + response_data["error"]);
-                    }
-                }
-            }
+
 
         }
         function editRow(button) {
