@@ -74,7 +74,8 @@
             <label>日期:</label>&emsp;&emsp;
             <input type="date" id="dateInput"><br /><br />
             <label>菜品名称:</label>
-            <input type="text" id="nameInput"><br /><br />
+            <input type="text" id="nameInput" list="nameList">
+            <datalist id="nameList"></datalist>
             <label>描述:</label>&emsp;&emsp;
             <input type="text" id="descriptionInput"><br /><br />
             <label>数量:</label>&emsp;&emsp;
@@ -140,6 +141,25 @@
             document.getElementById("quantityInput").value = "";
             document.getElementById("priceInput").value = "";
         }
+
+        const nameInput = document.getElementById("nameInput");
+        const nameList = document.getElementById("nameList");
+
+        nameInput.addEventListener("input", updateNameList);
+
+        function updateNameList() {
+            const input = nameInput.value;
+            nameList.innerHTML = "";
+            const options = ["apple", "banana", "cherry", "date"];
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].startsWith(input)) {
+                    const option = document.createElement("option");
+                    option.value = options[i];
+                    nameList.appendChild(option);
+                }
+            }
+        }
+
     </script>
 
 
