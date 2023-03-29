@@ -2,34 +2,11 @@
 <html lang="en">
 
 <head>
+    <link href="Order_information.css" rel="stylesheet" type="text/css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        .nav {
-            height: 65px;
-            border-bottom: 3px black solid;
-        }
-
-        .nav h1 {
-            margin-top: 0;
-            width: 20%;
-            float: left;
-        }
-
-        .nav ul {
-            margin-top: 0;
-            width: 100%;
-        }
-
-        .nav ul li {
-            width: 20%;
-            float: left;
-            text-align: center;
-            list-style: none;
-        }
-    </style>
     <script>
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "http://127.0.0.1:5000/api/v1/session");
@@ -46,74 +23,90 @@
 </head>
 
 <body>
-    <div class="nav">
-        <h1>食堂订菜系统</h1>
-        <br>
-        <ul>
-            <a href="School_information.html">
-                <li>学校信息</li>
-            </a>
-            <a href="Daily_menu_price_list.html">
-                <li>每日菜品价目表</li>
-            </a>
-            <a href="Export.html">
-                <li>导出汇总</li>
-            </a>
-            <a href="">
-                <li>退出登录</li>
-            </a>
-        </ul>
+    <div class="nav_div">
+        <nav class="navbar">
+
+            <div class="navbar-menu">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="School_information.html" class="nav-link">学校信息</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="Daily_menu_price_list.html" class="nav-link">每日菜品价目表</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="Export.html" class="nav-link">导出汇总</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">退出登录</a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
     </div>
 
-    <h1>每日订单</h1>
-    <table id="myTable">
-        <thead>
-            <tr>
-                <th>日期</th>
-                <th>菜品名称</th>
-                <th>描述</th>
-                <th>数量</th>
-                <th>价格</th>
-                <th>总价</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>2023-03-23</td>
-                <td>鱼香肉丝</td>
-                <td>辣的好吃</td>
-                <td>2</td>
-                <td>15.00</td>
-                <td>30.00</td>
-                <td><button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button></td>
-            </tr>
-            <tr>
-                <td>2023-03-23</td>
-                <td>宫保鸡丁</td>
-                <td>有点辣</td>
-                <td>3</td>
-                <td>18.00</td>
-                <td>54.00</td>
-                <td><button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button></td>
-            </tr>
-        </tbody>
-    </table>
-    <br>
-    <form>
-        <h2>添加记录</h2>
-        <label>日期:</label>
-        <input type="date" id="dateInput">
-        <label>菜品名称:</label>
-        <input type="text" id="nameInput">
-        <label>描述:</label>
-        <input type="text" id="descriptionInput">
-        <label>数量:</label>
-        <input type="number" id="quantityInput">
-        <label>单价:</label>
-        <input type="number" id="priceInput" step="0.01">
-        <button type="button" onclick="addRow()">添加</button>
-    </form>
+    <div class="daily">
+        <h3>每日订单</h3>
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>菜品名称</th>
+                    <th>描述</th>
+                    <th>数量</th>
+                    <th>价格</th>
+                    <th>总价</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2023-03-23</td>
+                    <td>鱼香肉丝</td>
+                    <td>辣的好吃</td>
+                    <td>2</td>
+                    <td>15.00</td>
+                    <td>30.00</td>
+                    <td><button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button></td>
+                </tr>
+                <tr>
+                    <td>2023-03-23</td>
+                    <td>宫保鸡丁</td>
+                    <td>有点辣</td>
+                    <td>3</td>
+                    <td>18.00</td>
+                    <td>54.00</td>
+                    <td><button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="addrecord">
+        <form>
+            <h3>添加记录</h3>
+            <label>日期:</label>&emsp;&emsp;
+            <input type="date" id="dateInput"><br /><br />
+            <label>菜品名称:</label>
+            <input type="text" id="nameInput"><br /><br />
+            <label>描述:</label>&emsp;&emsp;
+            <input type="text" id="descriptionInput"><br /><br />
+            <label>数量:</label>&emsp;&emsp;
+            <input type="number" id="quantityInput"><br /><br />
+            <label>价格:</label>&emsp;&emsp;
+            <input type="number" id="priceInput" step="0.01"><br /><br />
+            <button style="margin-left: 40%;" type="button" onclick="addRow()">添加</button>
+        </form>
+    </div>
+
 
     <script>
         function addRow() {
