@@ -76,6 +76,7 @@
         }
     </style>
     <script>
+        var schoolsData;
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "http://127.0.0.1:5000/api/v1/session");
         xhr.withCredentials = true;
@@ -93,13 +94,82 @@
         xhttp1.withCredentials = true;
         xhttp1.send();
         xhttp1.onreadystatechange = function () {
-            if (xhttp1.readyState == 4 && xhttp1.status >= 200 && xhttp1.status <= 300) {
-                const data = { "name": schoolName, "address": schoolAddress };
-                const resultElement = document.getElementById("schools-container"); // 获取要插入数据的元素
-                resultElement.innerHTML = JSON.stringify(data);
-                resultElement.innerHTML = "学校名称: " + data + ", 学校地址: " + data; // Displays "Name: John, Age: 30"
+            if (xhttp1.readyState == 4 && xhttp1.status >= 200 && xhttp1.status < 300) {
+                schoolsData = JSON.parse(xhttp1.responseText)["data"];
+                for (let i = 0; i < schoolsData.length; i++) {
+                    const schoolID = schoolsData[i]["schoolID"];
+                    const schoolName = schoolsData[i]["schoolName"];
+                    const schoolContainer = document.createElement('div');
+                    schoolContainer.id = schoolName;
+                    schoolContainer.innerHTML = `
+            <h2>${schoolName}</h2>
+            <button type="button" onclick="deleteSchool('${schoolName}')">删除学校</button>
+            <form>
+              <label>客户名称:</label>
+              <input type="text" name="customerName" required>
+              <label>联系人姓名:</label>
+              <input type="text" name="Contact" required>
+              <label>电话号码:</label>
+              <input type="tel" name="customerPhone" required>
+              <button type="button" onclick="addCustomer('${schoolName}', ${schoolID})">添加</button>
+              <button type="button" onclick="clearCustomerForm('${schoolName}')">清除</button>
+            </form>
+            <div class="customers-container"></div>
+          `;
+                    document.getElementById('schools-container').appendChild(schoolContainer);
+
+                    // Add the school to the form data
+                    formData[schoolName] = { customers: [] };
+                }
             }
         };
+
+
+        const xhttp2 = new XMLHttpRequest();
+        xhttp2.open("GET", "http://127.0.0.1:5000/api/v1/customers");
+        xhttp2.withCredentials = true;
+        xhttp2.send();
+        xhttp2.onreadystatechange = function () {
+            if (xhttp2.readyState == 4 && xhttp2.status >= 200 && xhttp2.status < 300) {
+                customersData = JSON.parse(xhttp2.responseText)["data"];
+                for (let i = 0; i < customersData.length; i++) {
+                    const schoolID = schoolsData[i]["schoolID"];
+                    const schoolName = schoolsData[i]["schoolName"];
+                    const customerName = customersData[i]["customerName"];
+                    const contactName = customersData[i]["contactName"];
+                    const contactPhone = customersData[i]["contactPhone"];
+                    const customerContainer = document.createElement('div');
+                    customerContainer.className = 'customer-container';
+                    const customerInfo = `
+                <div>
+                    <label>客户名称:</label>
+                    <span>${customerName}</span>
+                </div>
+                <div>
+                    <label>联系人姓名:</label>
+                    <span>${contactName}</span>
+                </div>
+                <div>
+                    <label>电话号码:</label>
+                    <span>${contactPhone}</span>
+                </div>
+                <button type="button" onclick="editCustomer('${schoolName}', '${customerName}')">修改</button>
+                <button type="button" onclick="deleteCustomer('${schoolName}', '${customerName}')">删除</button>
+                <a href="./Order_information.html">订单信息</a>
+            `;
+                    customerContainer.innerHTML = customerInfo;
+                    document.getElementById(schoolName).querySelector('.customers-container').appendChild(customerContainer);
+
+                    // Add the customer to the form data
+                    formData[schoolName].customers.push({
+                        customerName: customerName,
+                        contactName: contactName,
+                        contactPhone: contactPhone
+                    });
+                }
+            }
+        };
+
 
 
     </script>
@@ -190,7 +260,7 @@
             // Check if customer name already exists
             const customerNames = formData[schoolName].customers.map(customer => customer.name);
             if (customerNames.includes(customerName)) {
-                alert('Customer name already exists for this school!');
+                alert('该学校存在此客户！');
                 return;
             }
 
