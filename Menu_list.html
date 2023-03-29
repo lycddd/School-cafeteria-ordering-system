@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="Menu_list.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://127.0.0.1:5000/api/v1/session");
+        xhr.withCredentials = true;
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status > 300) {
+                    window.location.href = "./Login.html";
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="nav_div">
+        <nav class="navbar">
+            <div class="navbar-menu">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="School_information.html" class="nav-link">学校信息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="Daily_menu_price_list.html" class="nav-link">每日菜品价目表</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="Menu_list.html" class="nav-link">菜品表</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="Export.html" class="nav-link">导出汇总</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">退出登录</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="daily">
+        <h3>每日订单</h3>
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th>菜品名称</th>
+                    <th>单位</th>
+                    <th>大类</th>
+                    <th>小类</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2023-03-23</td>
+                    <td>鱼香肉丝</td>
+                    <td>辣的好吃</td>
+                    <td>2</td>
+                    <td><button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button></td>
+                </tr>
+                <tr>
+                    <td>2023-03-23</td>
+                    <td>宫保鸡丁</td>
+                    <td>有点辣</td>
+                    <td>3</td>
+                    <td><button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="addrecord">
+        <form>
+            <h3>添加记录</h3>
+            <label>菜品名称:</label>
+            <input type="text" id="nameInput"><br /><br />
+            <label>单位:</label>&emsp;&emsp;
+            <input type="text" id="unitInput"><br /><br />
+            <label>大类:</label>&emsp;&emsp;
+            <input type="text" id="categuryInput"><br /><br />
+            <label>小类:</label>&emsp;&emsp;
+            <input type="text" id="typeInput" step="0.01"><br /><br />
+            <button style="margin-left: 40%;" type="button" onclick="addRow()">添加</button>
+        </form>
+    </div>
+
+
+    <script>
+        function addRow() {
+            var table = document.getElementById("myTable");
+            var name = document.getElementById("nameInput").value;
+            var unit = document.getElementById("unitInput").value;
+            var categury = document.getElementById("categuryInput").value;
+            var type = document.getElementById("typeInput").value;
+            
+            var row = table.insertRow(table.rows.length);
+            
+            var nameCell = row.insertCell(0);
+            var unitCell = row.insertCell(1);
+            var categuryCell = row.insertCell(2);
+            var typeCell = row.insertCell(3);
+            var actionCell = row.insertCell(4);
+            
+            nameCell.innerHTML = name;
+            unitCell.innerHTML = unit;
+            categuryCell.innerHTML = categury;
+            typeCell.innerHTML = type;
+            actionCell.innerHTML = '<button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button>';
+            clearForm();
+        }
+        function editRow(button) {
+            var row = button.parentNode.parentNode;
+            var date = row.cells[0].innerHTML;
+            var name = row.cells[1].innerHTML;
+            var description = row.cells[2].innerHTML;
+            var quantity = row.cells[3].innerHTML;
+            var price = row.cells[4].innerHTML;
+            var total = row.cells[5].innerHTML;
+            document.getElementById("dateInput").value = date;
+            document.getElementById("nameInput").value = name;
+            document.getElementById("descriptionInput").value = description;
+            document.getElementById("quantityInput").value = quantity;
+            document.getElementById("priceInput").value = price;
+            row.parentNode.removeChild(row);
+        }
+
+        function deleteRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        function clearForm() {
+            document.getElementById("typeInput").value = "";
+            document.getElementById("nameInput").value = "";
+            document.getElementById("categuryInput").value = "";
+            document.getElementById("unitInput").value = "";
+        }
+    </script>
+
+
+</body>
+
+</html>
