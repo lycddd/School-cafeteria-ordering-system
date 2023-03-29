@@ -94,7 +94,7 @@
         xhttp1.send();
         xhttp1.onreadystatechange = function () {
             if (xhttp1.readyState == 4 && xhttp1.status >= 200 && xhttp1.status <= 300) {
-                const data = {"name": schoolName , "address": schoolAddress};
+                const data = { "name": schoolName, "address": schoolAddress };
                 const resultElement = document.getElementById("schools-container"); // 获取要插入数据的元素
                 resultElement.innerHTML = JSON.stringify(data);
                 resultElement.innerHTML = "学校名称: " + data + ", 学校地址: " + data; // Displays "Name: John, Age: 30"
@@ -109,7 +109,6 @@
 <body>
     <div class="nav_div">
         <nav class="navbar">
-
             <div class="navbar-menu">
                 <ul class="navbar-nav">
                     <li class="nav-item">
@@ -155,7 +154,7 @@
 
         // Create a new school
         function addSchool() {
-            var schoolName,schoolAddress;
+            var schoolName, schoolAddress;
             schoolName = document.getElementById("schoolName").value;
             schoolAddress = document.getElementById("schoolAddress").value;
 
@@ -168,6 +167,7 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4) {
                     if (xhr.status >= 200 && xhr.status < 300) {
+                        const schoolID = JSON.parse(xhr.responseText)["schoolID"];
                         // Create the school container
                         const schoolContainer = document.createElement('div');
                         schoolContainer.id = schoolName;
@@ -181,7 +181,7 @@
               <input type="text" name="Contact" required>
               <label>电话号码:</label>
               <input type="tel" name="customerPhone" required>
-              <button type="button" onclick="addCustomer('${schoolName}')">添加</button>
+              <button type="button" onclick="addCustomer('${schoolName}', ${schoolID})">添加</button>
               <button type="button" onclick="clearCustomerForm('${schoolName}')">清除</button>
             </form>
             <div class="customers-container"></div>
@@ -199,8 +199,9 @@
         }
 
         // Add a customer to a school
-        function addCustomer(schoolName) {
-            
+        var schoolsdata;
+        function addCustomer(schoolName, schoolID) {
+
             const customerForm = document.getElementById(schoolName).querySelector('form');
             const customerInputs = customerForm.querySelectorAll('input');
             const customerName = customerInputs[0].value.trim();
@@ -245,9 +246,7 @@
             });
 
 
-            
-            
-            const json_data = window.JSON.stringify({ "customerName": customerName});
+            const json_data = window.JSON.stringify({ "customerName": customerName, "schoolID": schoolID });
             const xhr12 = new XMLHttpRequest();
             xhr12.withCredentials = true;
             xhr12.open("POST", "http://127.0.0.1:5000/api/v1/customers");
@@ -261,10 +260,10 @@
                         var response_data = JSON.parse(xhr12.response)
                     }
                 }
+
             }
 
-
-            const json_data1 = window.JSON.stringify({ "contactName": Contact, "contactPhone": customerPhone});
+            const json_data1 = window.JSON.stringify({ "contactName": Contact, "contactPhone": customerPhone });
             const xhr1 = new XMLHttpRequest();
             xhr1.withCredentials = true;
             xhr1.open("POST", "http://127.0.0.1:5000/api/v1/contacts");
