@@ -1,30 +1,44 @@
+
+
 body{
+	font-size: 32px;
 	margin-top: 150px;
 	}
+
 .div{
 	margin-top: 150px;
-	border: 1px solid black;
-	width: 400px;
-	height: 400px;
+	box-shadow: 0 2px 4px black;
+	width: 600px;
+	height: 500px;
 	border-radius: 50px;
 	margin: auto;
 	text-align: center;
+	padding: 30px;
 }
-.p{
-	font-size: 50px;
+input{
+	font-size: 26px;
 }
 .form{
 	margin-top: 75px;
 }
-.button{
-	background-color: hsl(120, 2%, 75%);
-	border: none;
-	color: white;
-	padding: 15px 32px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	margin: 4px 2px;
-	border-radius: 15px;
-}
+button {
+	
+	background-color: #4CAF50; /*设置按钮背景颜色*/
+	color: white; /*设置按钮文字颜色*/
+	border: none; /*移除按钮边框*/
+	border-radius: 5px; /*设置按钮圆角*/
+	text-align: center; /*设置文字居中*/
+	text-decoration: none; /*移除文字下划线*/
+	display: inline-block; /*设置按钮为块级元素*/
+	font-size: 24px; /*设置按钮文字大小*/
+	margin: 10px 0; /*设置按钮外边距*/
+	cursor: pointer; /*设置鼠标指针为手形*/
+	transition: background-color 0.3s; /*设置按钮背景颜色渐变过渡效果*/
+	width: 140px;
+	height: 40px;
+  }
+  
+  button:hover {
+	background-color: #3e8e41; /*设置鼠标悬停时的按钮背景颜色*/
+  }
+
