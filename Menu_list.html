@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script>
-        var xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.open("GET", "http://127.0.0.1:5000/api/v1/session");
         xhr.withCredentials = true;
         xhr.send();
         xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
+            if (xhr.readyState === 4) {
                 if (xhr.status > 300) {
                     window.location.href = "./Login.html";
                 }
@@ -24,106 +24,218 @@
 
 <body>
 
-    <div class="daily">
-        <h3>菜品表</h3>
-        <table id="myTable">
-            <thead>
-                <tr>
-                    <th>菜品名称</th>
-                    <th>单位</th>
-                    <th>大类</th>
-                    <th>小类</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>2023-03-23</td>
-                    <td>鱼香肉丝</td>
-                    <td>辣的好吃</td>
-                    <td>2</td>
-                    <td><button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button></td>
-                </tr>
-                <tr>
-                    <td>2023-03-23</td>
-                    <td>宫保鸡丁</td>
-                    <td>有点辣</td>
-                    <td>3</td>
-                    <td><button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="daily">
+    <h3>菜品表</h3>
+    <table id="myTable">
+        <thead>
+        <tr>
+            <th>菜品名称</th>
+            <th>单位</th>
+            <th>大类</th>
+            <th>小类</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
 
+<div class="addrecord">
+    <form>
+        <h3>添加记录</h3>
+        <label>菜品名称:</label>
+        <input type="text" id="nameInput"><br/><br/>
+        <label>单位:</label>&emsp;&emsp;
+        <input type="text" id="unitInput"><br/><br/>
+        <label>大类:</label>&emsp;&emsp;
+        <input type="text" id="categoryInput"><br/><br/>
+        <label>小类:</label>&emsp;&emsp;
+        <input type="text" id="typeInput" step="0.01"><br/><br/>
+        <button style="margin-left: 40%;" type="button" onclick="addRow()">添加</button>
+    </form>
+</div>
 
 
+<script>
+    function asyncGet(url) {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url);
+            xhr.withCredentials = true;
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status < 300) {
+                        resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        reject(xhr.responseText);
+                    }
+                }
+            }
+        });
+    }
 
+    function asyncPost(url, data) {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.withCredentials = true;
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(data));
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status < 300) {
+                        resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        reject(xhr.responseText);
+                    }
+                }
+            }
+        });
+    }
 
+    var unitsData;
+    var categoriesData;
+    var typesData;
 
+    async function getUnits() {
+        unitsData = await asyncGet("http://127.0.0.1:5000/api/v1/units");
+        unitsData = unitsData["data"];
+    }
 
-    <div class="addrecord">
-        <form>
-            <h3>添加记录</h3>
-            <label>菜品名称:</label>
-            <input type="text" id="nameInput"><br /><br />
-            <label>单位:</label>&emsp;&emsp;
-            <input type="text" id="unitInput"><br /><br />
-            <label>大类:</label>&emsp;&emsp;
-            <input type="text" id="categuryInput"><br /><br />
-            <label>小类:</label>&emsp;&emsp;
-            <input type="text" id="typeInput" step="0.01"><br /><br />
-            <button style="margin-left: 40%;" type="button" onclick="addRow()">添加</button>
-        </form>
-    </div>
+    async function getCategories() {
+        categoriesData = await asyncGet("http://127.0.0.1:5000/api/v1/categories");
+        categoriesData = categoriesData["data"];
+    }
 
+    async function getTypes() {
+        typesData = await asyncGet("http://127.0.0.1:5000/api/v1/types");
+        typesData = typesData["data"];
+    }
 
-    <script>
-        function addRow() {
-            var table = document.getElementById("myTable");
-            var name = document.getElementById("nameInput").value;
-            var unit = document.getElementById("unitInput").value;
-            var categury = document.getElementById("categuryInput").value;
-            var type = document.getElementById("typeInput").value;
-            var row = table.insertRow(table.rows.length);
-            var nameCell = row.insertCell(0);
-            var unitCell = row.insertCell(1);
-            var categuryCell = row.insertCell(2);
-            var typeCell = row.insertCell(3);
-            var actionCell = row.insertCell(4);
-            
-            nameCell.innerHTML = name;
-            unitCell.innerHTML = unit;
-            categuryCell.innerHTML = categury;
-            typeCell.innerHTML = type;
-            actionCell.innerHTML = '<button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button>';
-            clearForm();
+    getUnits();
+    getCategories();
+    getTypes();
+
+    async function addRow() {
+        var table = document.getElementById("myTable");
+        var name = document.getElementById("nameInput").value;
+        var unit = document.getElementById("unitInput").value;
+        var category = document.getElementById("categoryInput").value;
+        var type = document.getElementById("typeInput").value;
+
+        var unitID = null;
+        var categoryID = null;
+        var typeID = null;
+
+        if (unit.length > 0) {
+            for (let i = 0; i < unitsData.length; i++) {
+                console.log(unit, unitsData[i]["unitName"]);
+                if (unit === unitsData[i]["unitName"]) {
+                    unitID = unitsData[i]["unitID"];
+                    break;
+                }
+            }
         }
-        function editRow(button) {
-            var row = button.parentNode.parentNode;
-            var name = row.cells[0].innerHTML;
-            var unit = row.cells[1].innerHTML;
-            var categury = row.cells[2].innerHTML;
-            var type = row.cells[3].innerHTML;
-            document.getElementById("nameInput").value = name;
-            document.getElementById("unitInput").value = unit;
-            document.getElementById("categuryInput").value = categury;
-            document.getElementById("typeInput").value = type;
-            row.parentNode.removeChild(row);
+
+        if (unitID == null) {
+            try {
+                const response = await asyncPost("http://127.0.0.1:5000/api/v1/units", {"unitName": unit});
+                unitsData.push({"unitID": response["unitID"], "unitName": unit});
+                unitID = response["unitID"];
+            } catch (e) {
+                console.log(e);
+            }
         }
 
-        function deleteRow(button) {
-            var row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
+        if (category.length > 0) {
+            for (let i = 0; i < categoriesData.length; i++) {
+                if (category === categoriesData[i]["categoryName"]) {
+                    categoryID = categoriesData[i]["categoryID"];
+                    break;
+                }
+            }
         }
 
-        function clearForm() {
-            document.getElementById("typeInput").value = "";
-            document.getElementById("nameInput").value = "";
-            document.getElementById("categuryInput").value = "";
-            document.getElementById("unitInput").value = "";
+        if (categoryID == null) {
+            try {
+                const response = await asyncPost("http://127.0.0.1:5000/api/v1/categories", {"categoryName": category});
+                categoriesData.push({"categoryID": response["categoryID"], "categoryName": category});
+                categoryID = response["categoryID"];
+            } catch (e) {
+                console.log(e);
+            }
         }
-    </script>
+
+        if (type.length > 0) {
+            for (let i = 0; i < typesData.length; i++) {
+                if (type === typesData[i]["typeName"]) {
+                    typeID = typesData[i]["typeID"];
+                    break;
+                }
+            }
+        }
+
+        if (typeID == null) {
+            try {
+                const response = await asyncPost("http://127.0.0.1:5000/api/v1/types", {
+                    "categoryID": categoryID,
+                    "typeName": type
+                });
+                typesData.push({"typeID": response["typeID"], "typeName": type});
+                typeID = response["typeID"];
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        await asyncPost("http://127.0.0.1:5000/api/v1/ingredients", {
+            "ingredientName": name,
+            "unitID": unitID,
+            "typeID": typeID
+        });
+
+        var row = table.insertRow(table.rows.length);
+        var nameCell = row.insertCell(0);
+        var unitCell = row.insertCell(1);
+        var categoryCell = row.insertCell(2);
+        var typeCell = row.insertCell(3);
+        var actionCell = row.insertCell(4);
+        nameCell.innerHTML = name;
+        unitCell.innerHTML = unit;
+        categoryCell.innerHTML = category;
+        typeCell.innerHTML = type;
+        actionCell.innerHTML = '<button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button>';
+
+        clearForm();
+    }
+
+    function editRow(button) {
+        var row = button.parentNode.parentNode;
+        var name = row.cells[0].innerHTML;
+        var unit = row.cells[1].innerHTML;
+        var category = row.cells[2].innerHTML;
+        var type = row.cells[3].innerHTML;
+        document.getElementById("nameInput").value = name;
+        document.getElementById("unitInput").value = unit;
+        document.getElementById("categoryInput").value = category;
+        document.getElementById("typeInput").value = type;
+        row.parentNode.removeChild(row);
+    }
+
+    function deleteRow(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
+    function clearForm() {
+        document.getElementById("typeInput").value = "";
+        document.getElementById("nameInput").value = "";
+        document.getElementById("categoryInput").value = "";
+        document.getElementById("unitInput").value = "";
+    }
+</script>
 
 
 </body>
