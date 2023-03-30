@@ -58,7 +58,8 @@
             <label>日期:</label>&emsp;&emsp;
             <input type="date" id="dateInput"><br /><br />
             <label>菜品名称:</label>
-            <input type="text" id="nameInput"><br /><br />
+            <input type="text" id="nameInput" list="nameList"><br /><br />
+            <datalist id="nameList"></datalist>
             <label>价格:</label>&emsp;&emsp;
             <input type="number" id="priceInput" step="0.01"><br /><br />
             <button style="margin-left: 40%;" type="button" onclick="addRow()">添加</button>
@@ -104,13 +105,14 @@
             });
         }
 
-        var priceData;
+        var ingredientsData;
 
-        async function getPrice() {
-            priceData = await asyncGet("http://127.0.0.1:5000/api/v1/prices");
-            priceData = priceData["data"];
+        async function getIngredients() {
+            ingredientsData = await asyncGet("http://127.0.0.1:5000/api/v1/ingredients");
+            ingredientsData = ingredientsData["data"];
         }
-        getPrice();
+
+        getIngredients();
 
         async function addRow() {
             var table = document.getElementById("myTable");
@@ -119,33 +121,33 @@
             var price = document.getElementById("priceInput").value;
             var row = table.insertRow(table.rows.length);
 
-            var priceID = null;
+            var ingredientID = null;
 
-
-            if (price.length > 0) {
-                for (let i = 0; i < priceData.length; i++) {
-                    console.log(price, priceData[i]["pricePrice"]);
-                    if (price === priceData[i]["pricePrice"]) {
-                        priceID = priceData[i]["priceID"];
-                        ingredientID = priceData[i]["ingredientID"];
+            if (name.length > 0) {
+                for (let i = 0; i < ingredientsData.length; i++) {
+                    console.log(name, ingredientsData[i]["ingredientName"]);
+                    if (name === ingredientsData[i]["ingredientName"]) {
+                        ingredientID = ingredientsData[i]["ingredientID"];
                         break;
                     }
                 }
             }
-            if (priceID == null) {
+
+            if (ingredientID == null) {
                 try {
-                    const response = await asyncPost("http://127.0.0.1:5000/api/v1/prices", { "pricePrice": price });
-                    priceData.push({ "priceID": response["priceID"], "pricePrice": price ,"ingredientID":response[ingredientID]});
-                    priceID = response["priceID"];
+                    const response = await asyncPost("http://127.0.0.1:5000/api/v1/ingredients");
+                    ingredientsData.push({ "ingredientID": response["ingredientID"]});
+                    ingredientID = response["ingredientID"];
                 } catch (e) {
                     console.log(e);
                 }
             }
             await asyncPost("http://127.0.0.1:5000/api/v1/prices", {
-                "ingredientID": ingredientID,
-                "pricePrice": price,
+            "ingredientID": ingredientID,
+            "pricePrice" :parseFloat(price),
+        });
 
-            });
+
             var dateCell = row.insertCell(0);
             var nameCell = row.insertCell(1);
             var priceCell = row.insertCell(2);
@@ -181,6 +183,35 @@
             document.getElementById("nameInput").value = "";
             document.getElementById("priceInput").value = "";
         }
+
+        const nameInput = document.getElementById("nameInput");
+        const nameList = document.getElementById("nameList");
+
+        nameInput.addEventListener("input", updateNameList);
+
+        function updateNameList() {
+            const input = nameInput.value;
+            nameList.innerHTML = "";
+            const options = [];
+            for (let i = 0; i < ingredientsData.length; i++) {
+                options.push(ingredientsData[i]["ingredientName"]);
+            }
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].startsWith(input)) {
+                    const option = document.createElement("option");
+                    option.value = options[i];
+                    nameList.appendChild(option);
+                }
+            }
+        }
+
+
+
+
+
+
+
+        
     </script>
 
 
