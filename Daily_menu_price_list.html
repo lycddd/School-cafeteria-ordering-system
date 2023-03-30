@@ -22,210 +22,224 @@
     </script>
 </head>
 
-<body>
+<body onload="onPageLoad()">
 
-    <div class="daily">
-        <h3>菜品价格表</h3>
-        <table id="myTable">
-            <thead>
-                <tr>
-                    <th>日期</th>
-                    <th>菜品名称</th>
-                    <th>价格</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>2023-03-23</td>
-                    <td>鱼香肉丝</td>
-                    <td>15.00</td>
-                    <td><button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button></td>
-                </tr>
-                <tr>
-                    <td>2023-03-23</td>
-                    <td>宫保鸡丁</td>
-                    <td>18.00</td>
-                    <td><button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="daily">
+    <h3>菜品价格表</h3>
+    <table id="myTable">
+        <thead>
+        <tr>
+            <th>日期</th>
+            <th>菜品名称</th>
+            <th>价格</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
-    <div class="addrecord">
-        <form>
-            <h3>添加记录</h3>
-            <label>日期:</label>&emsp;&emsp;
-            <input type="date" id="dateInput"><br /><br />
-            <label>菜品名称:</label>
-            <input type="text" id="nameInput" list="nameList"><br /><br />
-            <datalist id="nameList"></datalist>
-            <label>价格:</label>&emsp;&emsp;
-            <input type="number" id="priceInput" step="0.01"><br /><br />
-            <button style="margin-left: 40%;" type="button" onclick="addRow()">添加</button>
-        </form>
-    </div>
+<div class="addrecord">
+    <form>
+        <h3>添加记录</h3>
+        <label>日期:</label>&emsp;&emsp;
+        <input type="date" id="dateInput"><br/><br/>
+        <label>菜品名称:</label>
+        <input type="text" id="nameInput" list="nameList"><br/><br/>
+        <datalist id="nameList"></datalist>
+        <label>价格:</label>&emsp;&emsp;
+        <input type="number" id="priceInput" step="0.01"><br/><br/>
+        <button style="margin-left: 40%;" type="button" onclick="addRow()">添加</button>
+    </form>
+</div>
 
 
-    <script>
-        function asyncGet(url) {
-            return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                xhr.open("GET", url);
-                xhr.withCredentials = true;
-                xhr.send();
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status < 300) {
-                            resolve(JSON.parse(xhr.responseText));
-                        } else {
-                            reject(xhr.responseText);
-                        }
+<script>
+    function asyncGet(url) {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url);
+            xhr.withCredentials = true;
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status < 300) {
+                        resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        reject(xhr.responseText);
                     }
                 }
-            });
-        }
+            }
+        });
+    }
 
-        function asyncPost(url, data) {
-            return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                xhr.open("POST", url);
-                xhr.withCredentials = true;
-                xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.send(JSON.stringify(data));
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status < 300) {
-                            resolve(JSON.parse(xhr.responseText));
-                        } else {
-                            reject(xhr.responseText);
-                        }
+    function asyncPost(url, data) {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.withCredentials = true;
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(data));
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status < 300) {
+                        resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        reject(xhr.responseText);
                     }
                 }
-            });
-        }
+            }
+        });
+    }
 
-        var ingredientsData;
-        var priceData;
+    var ingredientsData;
+    var pricesData;
 
-        async function getIngredients() {
-            ingredientsData = await asyncGet("http://127.0.0.1:5000/api/v1/ingredients");
-            ingredientsData = ingredientsData["data"];
-        }
-        async function getprice() {
-            priceData = await asyncGet("http://127.0.0.1:5000/api/v1/prices");
-            priceData = priceData["data"];
-        }
+    async function getIngredients() {
+        ingredientsData = await asyncGet("http://127.0.0.1:5000/api/v1/ingredients");
+        ingredientsData = ingredientsData["data"];
+    }
 
+    async function getPrices() {
+        pricesData = await asyncGet("http://127.0.0.1:5000/api/v1/prices");
+        pricesData = pricesData["data"];
+    }
 
-        getIngredients();
-
-        async function addRow() {
-            var table = document.getElementById("myTable");
-            var date = document.getElementById("dateInput").value;
-            var name = document.getElementById("nameInput").value;
-            var price = document.getElementById("priceInput").value;
+    async function displayPrices() {
+        var table = document.getElementById("myTable");
+        for (let i = 0; i < pricesData.length; i++) {
             var row = table.insertRow(table.rows.length);
+            var dateCell = row.insertCell(0);
+            var nameCell = row.insertCell(1);
+            var priceCell = row.insertCell(2);
+            var actionCell = row.insertCell(3);
+            const priceDate = new Date(pricesData[i]["priceDate"]);
+            const priceDateYear = priceDate.getFullYear();
+            let priceDateMonth = priceDate.getMonth() + 1;
+            let priceDateDay = priceDate.getDate();
+            priceDateMonth = priceDateMonth < 10 ? "0" + priceDateMonth : priceDateMonth;
+            priceDateDay = priceDateDay < 10 ? "0" + priceDateDay : priceDateDay;
+            dateCell.innerHTML = priceDateYear + "-" + priceDateMonth + "-" + priceDateDay;
+            nameCell.innerHTML = ingredientsData[
+                ingredientsData.findIndex((ingredient) => ingredient["ingredientID"] === pricesData[i]["ingredientID"])
+                ]["ingredientName"];
+            priceCell.innerHTML = pricesData[i]["pricePrice"].toString();
+            actionCell.innerHTML = '<button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button>';
+        }
+    }
 
-            var ingredientID = null;
-            var priceDate = null;
+    async function onPageLoad() {
+        await getIngredients();
+        await getPrices();
+        await displayPrices();
+        document.getElementById("dateInput").value = new Date().toISOString().slice(0, 10);
+    }
 
-            if (name.length > 0) {
-                for (let i = 0; i < ingredientsData.length; i++) {
-                    console.log(name, ingredientsData[i]["ingredientName"]);
-                    if (name === ingredientsData[i]["ingredientName"]) {
-                        ingredientID = ingredientsData[i]["ingredientID"];
+    async function addRow() {
+        var table = document.getElementById("myTable");
+        var date = document.getElementById("dateInput").value;
+        var name = document.getElementById("nameInput").value;
+        var price = document.getElementById("priceInput").value;
+        var row = table.insertRow(table.rows.length);
 
-                        break;
-                    }
+        var ingredientID = null;
+        var priceDate = date;
+
+        if (name.length > 0) {
+            for (let i = 0; i < ingredientsData.length; i++) {
+                console.log(name, ingredientsData[i]["ingredientName"]);
+                if (name === ingredientsData[i]["ingredientName"]) {
+                    ingredientID = ingredientsData[i]["ingredientID"];
+                    break;
                 }
             }
+        }
 
-            if (ingredientID == null) {
-                try {
-                    const response = await asyncPost("http://127.0.0.1:5000/api/v1/ingredients");
-                    ingredientsData.push({ "ingredientID": response["ingredientID"] });
-                    ingredientID = response["ingredientID"];
-                } catch (e) {
-                    console.log(e);
-                }
-            }
+        if (ingredientID == null) {
+            alert("菜品名称不存在");
+            return;
+        }
 
-            if (date.length > 0) {
-                priceDate = date;
-            }
+        if (price.length === 0) {
+            alert("价格不能为空");
+            return;
+        }
+
+        try {
             await asyncPost("http://127.0.0.1:5000/api/v1/prices", {
                 "ingredientID": ingredientID,
                 "pricePrice": parseFloat(price),
                 "priceDate": priceDate,
             });
-
-
-            var dateCell = row.insertCell(0);
-            var nameCell = row.insertCell(1);
-            var priceCell = row.insertCell(2);
-            var actionCell = row.insertCell(3);
-            dateCell.innerHTML = date;
-            nameCell.innerHTML = name;
-            priceCell.innerHTML = price;
-            actionCell.innerHTML = '<button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button>';
-
-
-            clearForm();
-
-
-        }
-        function editRow(button) {
-            var row = button.parentNode.parentNode;
-            var date = row.cells[0].innerHTML;
-            var name = row.cells[1].innerHTML;
-            var price = row.cells[2].innerHTML;
-            document.getElementById("dateInput").value = date;
-            document.getElementById("nameInput").value = name;
-            document.getElementById("priceInput").value = price;
-            row.parentNode.removeChild(row);
-        }
-
-        function deleteRow(button) {
-            var row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-        }
-
-        function clearForm() {
-            document.getElementById("dateInput").value = "";
-            document.getElementById("nameInput").value = "";
-            document.getElementById("priceInput").value = "";
-        }
-
-        const nameInput = document.getElementById("nameInput");
-        const nameList = document.getElementById("nameList");
-
-        nameInput.addEventListener("input", updateNameList);
-
-        function updateNameList() {
-            const input = nameInput.value;
-            nameList.innerHTML = "";
-            const options = [];
-            for (let i = 0; i < ingredientsData.length; i++) {
-                options.push(ingredientsData[i]["ingredientName"]);
-            }
-            for (let i = 0; i < options.length; i++) {
-                if (options[i].startsWith(input)) {
-                    const option = document.createElement("option");
-                    option.value = options[i];
-                    nameList.appendChild(option);
-                }
+        } catch (e) {
+            e = JSON.parse(e);
+            if (e["code"] !== 403) {
+                alert("添加失败");
+                return;
             }
         }
 
 
+        var dateCell = row.insertCell(0);
+        var nameCell = row.insertCell(1);
+        var priceCell = row.insertCell(2);
+        var actionCell = row.insertCell(3);
+        dateCell.innerHTML = date;
+        nameCell.innerHTML = name;
+        priceCell.innerHTML = price;
+        actionCell.innerHTML = '<button onclick="editRow(this)">编辑</button><button onclick="deleteRow(this)">删除</button>';
 
 
+        clearForm();
 
 
+    }
+
+    function editRow(button) {
+        var row = button.parentNode.parentNode;
+        var date = row.cells[0].innerHTML;
+        var name = row.cells[1].innerHTML;
+        var price = row.cells[2].innerHTML;
+        document.getElementById("dateInput").value = date;
+        document.getElementById("nameInput").value = name;
+        document.getElementById("priceInput").value = price;
+        row.parentNode.removeChild(row);
+    }
+
+    function deleteRow(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
+    function clearForm() {
+        document.getElementById("dateInput").value = "";
+        document.getElementById("nameInput").value = "";
+        document.getElementById("priceInput").value = "";
+    }
+
+    const nameInput = document.getElementById("nameInput");
+    const nameList = document.getElementById("nameList");
+
+    nameInput.addEventListener("input", updateNameList);
+
+    function updateNameList() {
+        const input = nameInput.value;
+        nameList.innerHTML = "";
+        const options = [];
+        for (let i = 0; i < ingredientsData.length; i++) {
+            options.push(ingredientsData[i]["ingredientName"]);
+        }
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].startsWith(input)) {
+                const option = document.createElement("option");
+                option.value = options[i];
+                nameList.appendChild(option);
+            }
+        }
+    }
 
 
-    </script>
+</script>
 
 
 </body>
