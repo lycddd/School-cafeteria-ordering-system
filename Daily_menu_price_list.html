@@ -106,11 +106,17 @@
         }
 
         var ingredientsData;
+        var priceData;
 
         async function getIngredients() {
             ingredientsData = await asyncGet("http://127.0.0.1:5000/api/v1/ingredients");
             ingredientsData = ingredientsData["data"];
         }
+        async function getprice() {
+            priceData = await asyncGet("http://127.0.0.1:5000/api/v1/prices");
+            priceData = priceData["data"];
+        }
+
 
         getIngredients();
 
@@ -122,12 +128,14 @@
             var row = table.insertRow(table.rows.length);
 
             var ingredientID = null;
+            var priceDate = null;
 
             if (name.length > 0) {
                 for (let i = 0; i < ingredientsData.length; i++) {
                     console.log(name, ingredientsData[i]["ingredientName"]);
                     if (name === ingredientsData[i]["ingredientName"]) {
                         ingredientID = ingredientsData[i]["ingredientID"];
+
                         break;
                     }
                 }
@@ -136,16 +144,21 @@
             if (ingredientID == null) {
                 try {
                     const response = await asyncPost("http://127.0.0.1:5000/api/v1/ingredients");
-                    ingredientsData.push({ "ingredientID": response["ingredientID"]});
+                    ingredientsData.push({ "ingredientID": response["ingredientID"] });
                     ingredientID = response["ingredientID"];
                 } catch (e) {
                     console.log(e);
                 }
             }
+
+            if (date.length > 0) {
+                priceDate = date;
+            }
             await asyncPost("http://127.0.0.1:5000/api/v1/prices", {
-            "ingredientID": ingredientID,
-            "pricePrice" :parseFloat(price),
-        });
+                "ingredientID": ingredientID,
+                "pricePrice": parseFloat(price),
+                "priceDate": priceDate,
+            });
 
 
             var dateCell = row.insertCell(0);
@@ -211,7 +224,7 @@
 
 
 
-        
+
     </script>
 
 
