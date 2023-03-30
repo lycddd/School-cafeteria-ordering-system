@@ -132,7 +132,7 @@
         }
     </style>
 </head>
-<body>
+<body onresize="resizeIframe()">
 <div class="nav_div">
     <nav class="navbar">
         <div class="navbar-menu">
@@ -157,7 +157,7 @@
     </nav>
 </div>
 <div>
-    <iframe src="Login.html" height="100%" width="100%" onload="resizeIframe(this)"></iframe>
+    <iframe src="Login.html" height="100%" width="100%" onload="resizeIframe()"></iframe>
 </div>
 <script>
     const frame = document.querySelector('iframe');
