@@ -22,7 +22,7 @@
     </script>
 </head>
 
-<body>
+<body onload="onPageLoad()">
 
 <div class="daily">
     <h3>菜品表</h3>
@@ -98,6 +98,7 @@
     var unitsData;
     var categoriesData;
     var typesData;
+    var ingredientsData;
 
     async function getUnits() {
         unitsData = await asyncGet("http://127.0.0.1:5000/api/v1/units");
@@ -114,9 +115,37 @@
         typesData = typesData["data"];
     }
 
-    getUnits();
-    getCategories();
-    getTypes();
+    async function getIngredients() {
+        ingredientsData = await asyncGet("http://127.0.0.1:5000/api/v1/ingredients");
+        ingredientsData = ingredientsData["data"];
+    }
+
+    async function displayIngredients() {
+        var table = document.getElementById("myTable");
+        for (let i = 0; i < ingredientsData.length; i++) {
+            var row = table.insertRow(i + 1);
+            var name = row.insertCell(0);
+            var unit = row.insertCell(1);
+            var category = row.insertCell(2);
+            var type = row.insertCell(3);
+            var operation = row.insertCell(4);
+            name.innerHTML = ingredientsData[i]["ingredientName"];
+            unit.innerHTML = unitsData[unitsData.findIndex(x => x["unitID"] === ingredientsData[i]["unitID"])]["unitName"];
+            category.innerHTML = categoriesData[
+                categoriesData.findIndex(x => x["categoryID"] === typesData[typesData.findIndex(x => x["typeID"] === ingredientsData[i]["typeID"])]["categoryID"])
+                ]["categoryName"];
+            type.innerHTML = typesData[typesData.findIndex(x => x["typeID"] === ingredientsData[i]["typeID"])]["typeName"];
+            operation.innerHTML = "<button type='button' onclick='deleteRow(this)'>删除</button>";
+        }
+    }
+
+    async function onPageLoad() {
+        await getUnits();
+        await getCategories();
+        await getTypes();
+        await getIngredients();
+        await displayIngredients();
+    }
 
     async function addRow() {
         var table = document.getElementById("myTable");
@@ -191,6 +220,11 @@
         }
 
         await asyncPost("http://127.0.0.1:5000/api/v1/ingredients", {
+            "ingredientName": name,
+            "unitID": unitID,
+            "typeID": typeID
+        });
+        ingredientsData.push({
             "ingredientName": name,
             "unitID": unitID,
             "typeID": typeID

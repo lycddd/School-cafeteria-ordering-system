@@ -6,16 +6,16 @@
 	<title>登录</title>
 	<link href="denglu.css" rel="stylesheet" type="text/css">
 	<script>
-		var xhr = new XMLHttpRequest();
+		const xhr = new XMLHttpRequest();
 		xhr.open("GET", "http://127.0.0.1:5000/api/v1/session");
 		xhr.withCredentials = true;
 		xhr.send();
 		xhr.onreadystatechange = function () {
-			if (xhr.readyState == 4) {
+			if (xhr.readyState === 4) {
 				if (xhr.status < 300) {
 					window.location.href = "./School_information.html";
 				}
-			};
+			}
 		}
 	</script>
 </head>
@@ -39,18 +39,18 @@
 		function login() {
 			const name = document.getElementById("name").value;
 			const password = document.getElementById("password").value;
-			var json_data = window.JSON.stringify({ "userName": name, "userPassword": password });
-			var xhr = new XMLHttpRequest();
+			const json_data = window.JSON.stringify({"userName": name, "userPassword": password});
+			const xhr = new XMLHttpRequest();
 			xhr.open("POST", "http://127.0.0.1:5000/api/v1/session");
 			xhr.withCredentials = true;
 			xhr.setRequestHeader("Content-type", "application/json");
 			xhr.send(json_data);
 			xhr.onreadystatechange = function () {
-				if (xhr.readyState == 4) {
+				if (xhr.readyState === 4) {
 					if (xhr.status < 300) {
 						window.location.href = "./School_information.html";
 					} else {
-						var response_data = JSON.parse(xhr.response)
+						const response_data = JSON.parse(xhr.response);
 						alert(response_data["error"]);
 					}
 				}
