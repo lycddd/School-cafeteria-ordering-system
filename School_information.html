@@ -7,74 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        .nav {
-            height: 65px;
-            border-bottom: 3px black solid;
-        }
-
-        .nav h1 {
-            margin-top: 0;
-            width: 20%;
-            float: left;
-        }
-
-        .nav ul {
-            margin-top: 0;
-            width: 100%;
-        }
-
-        .nav ul li {
-            width: 20%;
-            float: left;
-            text-align: center;
-            list-style: none;
-        }
-
-        .school_table {
-            width: 100%;
-            border-right: 2px solid black;
-            border-bottom: 2px solid black;
-        }
-
-        .school_table .school_tr th {
-            float: left;
-            width: 20%;
-        }
-
-        .school_table .span {
-            float: left;
-            width: 20%;
-        }
-
-        .button {
-            background-color: rgb(138, 187, 224);
-            margin-left: 15%;
-            float: left;
-            width: 15%;
-            height: 30px;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .section {
-            width: 70%;
-            float: right;
-
-        }
-
-        .consumer_table {
-            display: inline-block;
-            width: 80%;
-
-        }
-
-        .consumer_table tr th {
-            margin-top: 0;
-            width: 10%;
-            height: 50px;
-        }
-    </style>
     <script>
         var schoolsData;
         var customersData;
@@ -102,20 +34,21 @@
                     const schoolName = schoolsData[i]["schoolName"];
                     const schoolContainer = document.createElement('div');
                     schoolContainer.id = schoolName;
-                    schoolContainer.innerHTML = `
+                    schoolContainer.innerHTML = `<div>
             <h2>${schoolName}</h2>
             <button type="button" onclick="deleteSchool('${schoolName}')">删除学校</button>
-            <form>
-              <label>客户名称:</label>
-              <input type="text" name="customerName" required>
+            <form  style="margin-left: 30%;">
+              <label>客户名称:&emsp;</label>
+              <input type="text" name="customerName" required></br>
               <label>联系人姓名:</label>
-              <input type="text" name="Contact" required>
-              <label>电话号码:</label>
-              <input type="tel" name="customerPhone" required>
+              <input type="text" name="Contact" required></br>
+              <label>电话号码:&emsp;</label>
+              <input type="tel" name="customerPhone" required></br>
               <button type="button" onclick="addCustomer('${schoolName}', ${schoolID})">添加</button>
               <button type="button" onclick="clearCustomerForm('${schoolName}')">清除</button>
             </form>
             <div class="customers-container"></div>
+            </div>
           `;
                     document.getElementById('schools-container').appendChild(schoolContainer);
 
@@ -140,9 +73,9 @@
                     const contactPhone = customersData[i]["contactPhone"];
                     const customerContainer = document.createElement('div');
                     customerContainer.className = customerName;
-                    customerContainer.innerHTML = `
+                    customerContainer.innerHTML = `<div style="float:left;padding:10px;"  class="customerinfomation">
                 <div>
-                    <label>客户名称:</label>
+                    <label>客户名称:&emsp;</label>
                     <span>${customerName}</span>
                 </div>
                 <div>
@@ -150,12 +83,13 @@
                     <span>${contactName}</span>
                 </div>
                 <div>
-                    <label>电话号码:</label>
+                    <label>电话号码:&emsp;</label>
                     <span>${contactPhone}</span>
                 </div>
                 <button type="button" onclick="editCustomer('${schoolName}', '${customerName}')">修改</button>
                 <button type="button" onclick="deleteCustomer('${schoolName}', '${customerName}')">删除</button>
-                <a href="./Order_information.html">订单信息</a>
+                <a class="button" href="./Order_information.html">订单信息</a>
+                </div>
             `;
                     document.getElementById(schoolName).querySelector('.customers-container').appendChild(customerContainer);
 
@@ -191,12 +125,19 @@
         }
     }
 </script>
-<div id="schools-container"></div>
-<form>
-    学校：<input type="text" id="schoolName" value="">
-    地址：<input type="text" id="schoolAddress" value="">
-    <button type="button" onclick="addSchool()">添加学校和地址</button>
-</form>
+<div class="partschool" id="schools-container"></div>
+    
+<div class="adschool">
+    <form>
+        <h3>添加学校</h3>
+        &emsp;&emsp;<label>学校</label>&emsp;&emsp;
+        <input type="text" id="schoolName" value=""><br /><br />
+        &emsp;&emsp;<label>地址</label>&emsp;&emsp;
+        <input type="text" id="schoolAddress" value=""><br /><br />
+        <button style="margin-left: 20%;" type="button" onclick="addSchool()">添加</button>
+    </form>
+</div>
+
 <script>
     const formData = {};
 
@@ -219,20 +160,21 @@
                     // Create the school container
                     const schoolContainer = document.createElement('div');
                     schoolContainer.id = schoolName;
-                    schoolContainer.innerHTML = `
+                    schoolContainer.innerHTML = `<div style="float:left;padding:10px;">
             <h2>${schoolName}</h2>
             <button type="button" onclick="deleteSchool('${schoolName}')">删除学校</button>
-            <form>
-              <label>客户名称:</label>
-              <input type="text" name="customerName" required>
+            <form  style="margin-left: 30%;">
+              <label>客户名称:&emsp;</label>
+              <input type="text" name="customerName" required></br>
               <label>联系人姓名:</label>
-              <input type="text" name="Contact" required>
-              <label>电话号码:</label>
-              <input type="tel" name="customerPhone" required>
+              <input type="text" name="Contact" required></br>
+              <label>电话号码:&emsp;</label>
+              <input type="tel" name="customerPhone" required></br>
               <button type="button" onclick="addCustomer('${schoolName}', ${schoolID})">添加</button>
               <button type="button" onclick="clearCustomerForm('${schoolName}')">清除</button>
             </form>
             <div class="customers-container"></div>
+            </div>
           `;
                     document.getElementById('schools-container').appendChild(schoolContainer);
 
@@ -267,9 +209,9 @@
         // Create the customer container
         const customerContainer = document.createElement('div');
         customerContainer.className = customerName;
-        const customerInfo = `
+        const customerInfo = `<div style="float:left;padding:10px;" class="customerinfomation">
             <div>
-              <label>客户名称:</label>
+              <label>客户名称:&emsp;</label>
               <span>${customerName}</span>
             </div>
             <div>
@@ -277,12 +219,13 @@
               <span>${Contact}</span>
             </div>
             <div>
-              <label>电话号码:</label>
+              <label>电话号码:&emsp;</label>
               <span>${customerPhone}</span>
             </div>
         <button type="button" onclick="editCustomer('${schoolName}', '${customerName}')">修改</button>
         <button type="button" onclick="deleteCustomer('${schoolName}', '${customerName}')">删除</button>
-        <a href="./Order_information.html">订单信息</a>
+        <a href="./Order_information.html" class="button">订单信息</a>
+        </div>
       `;
         customerContainer.innerHTML = customerInfo;
         document.getElementById(schoolName).querySelector('.customers-container').appendChild(customerContainer);

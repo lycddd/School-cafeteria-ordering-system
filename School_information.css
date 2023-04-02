@@ -1,14 +1,16 @@
 .adschool {
-	width: 24%;
-	position: fixed;
-	top: 90px;
-	left: 8%;
-	background-color: #fff;
-	color: #333;
+    width: 24%;
+    position: fixed;
+    top: 90px;
+    left: 8%;
+    background-color: #fff;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 5px;
 }
 
-button {
-
+button,
+.button {
     border: none;
     /*移除按钮边框*/
     border-radius: 5px;
@@ -28,25 +30,36 @@ button {
     transition: background-color 0.3s;
     /*设置按钮背景颜色渐变过渡效果*/
     width: 100px;
+    background-color: whitesmoke;
 }
 
+.button:hover,
 button:hover {
     background-color: darkgray;
     /*设置鼠标悬停时的按钮背景颜色*/
     color: white;
 }
 
-.partschool{
-	
-	margin-left: 32%;
-	width: 60%;
-	
-}
-.partschool h2{
-	display: inline-block;
-	width: 80%;
+.customerinfomation:hover{
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+    /* 悬停时缩放效果 */
+    transition: transform 0.3s ease;
 }
 
-.customers-container{
-	margin: 3px;
+.partschool {
+
+    margin-left: 34%;
+    width: 60%;
+
 }
+
+.partschool h2 {
+    display: inline-block;
+    width: 80%;
+}
+
+.customers-container {
+    margin: 3px;
+}
+
